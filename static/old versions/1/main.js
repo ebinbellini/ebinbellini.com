@@ -18,7 +18,6 @@ class CP {
 	}
 }
 
-// TODO investigate if this is actually needed
 let passive_supported = false;
 try {
 	const options = {

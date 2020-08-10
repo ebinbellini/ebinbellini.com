@@ -3,11 +3,12 @@
 }
 
 body {
-    padding: 48px 8vw;
-    min-height: 300vh;
-    font-family: "Cabin", sans-serif;
-    background: #528062;
-    color: #fafafa;
+    padding: 48px 12px;
+    margin: auto;
+    max-width: 675px;
+    font-family: Tahomas, "Cabin", sans-serif;
+    background: #36383a;
+    color: #fbfcf3;
 }
 
 a {
@@ -22,48 +23,49 @@ a {
 
 .divider {
     margin: 8px 0;
-    height: 2px;
-    border-top: 1px dashed #fff;
-    border-bottom: 1px dashed #fff;
+    height: 6px;
+    border-top: 2px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
 }
 
 .icon-link {
     position: relative;
     display: inline-block;
-    width: 48px;
-    height: 48px;
-    margin: 0 2px;
-    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    width: 32px;
+    height: 32px;
+    margin: 0 4px;
+    transition: 160ms cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 
-.icon-link path {
+.icon-link path, .icon-link ellipse, .icon-link circle {
     transition: 200ms;
     stroke: #f1f1f1 !important;
 }
 
 .icon-link:hover {
-    transform: rotate(5deg);
+    transform: scale(1.1);
 }
 
-.icon-link:hover path {
+.icon-link:hover path, .icon-link:hover ellipse, .icon-link:hover circle {
     stroke: #fff !important;
+    fill: #ffffff30 !important;
 }
 
 .icon-link:active {
-    transform: rotate(10deg) scale(0.9);
+    transform: scale(0.9);
 }
 
 .icon-link tooltip {
     position: absolute;
     width: fit-content;
-    display: block;
-    top: 48px;
-    left: -50px;
-    right: -50px;
+    display: inline-block;
+    top: 30px;
+    left: -25px;
+    right: -25px;
     margin: auto;
     border-radius: 4px;
-    padding: 4px 8px;
+    padding: 2px 6px;
     text-decoration: none !important;
     background: #fafafa;
     color: #5a5a5a;
@@ -74,19 +76,46 @@ a {
 }
 
 .icon-link:hover tooltip {
-    transform: rotate(-5deg);
-    top: 52px;
+    top: 36px;
     opacity: 1;
 }
 
 .icon-link:active tooltip {
-    transform: rotate(-10deg) scale(1.08);
-    top: 56px;
+    top: 34px;
+    opacity: 0.5;
+}
+
+.small-icon {
+    position: relative;
+    cursor: pointer;
+    padding: 0 6px;
+    z-index: 8;
+    transform: scale(1.1);
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search:hover {
+    transform: scale(1.2);
+}
+
+.search:active {
+    transform: scale(1);
+}
+
+.searchsvg path {
+    transition: 200ms;
+}
+
+.small-icon:hover svg path, .small-icon:active svg path {
+    stroke: #fff !important;
+    fill: #ffffff30 !important;
 }
 
 h1 {
-    font-size: 64px;
+    font-size: 80px;
     line-height: 84px;
+    animation: 8s shine infinite;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button {
@@ -99,18 +128,20 @@ h1 {
     margin: 0 6px;
     color: #f5f5f5;
     font-weight: 500;
-    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    border-bottom: 2px solid #ffffff00;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button:hover {
-    top: -3px;
+    /*top: -3px;
+    border-bottom: 2px solid #fff;*/
     color: #fff;
-    border-bottom: 2px solid #fff;
+    transform: scale(1.08);
+    text-shadow: 0 1px 8px #ffffffaa;
 }
 
 .button:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
+    text-shadow: 0 1px 6px #ffffff30;
 }
 
 .long-white-space {
@@ -126,13 +157,21 @@ h1 {
 h2, h3 {
     margin-top: 32px;
     text-align: center;
-    font-size: 48px;
-    font-weight: 500;
+    line-height: 150%;
+    font-size: 50px;
+    font-weight: 700;
+}
+
+h2 {
+    animation: 8s shadow-bounce infinite;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 h3 {
     font-size: 32px;
 }
+
+/* TODO MOVE TO SEPARATE CSS FILE */
 
 .project {
     margin: 24px 0;
@@ -144,13 +183,14 @@ h3 {
 }
 
 .project img {
-    width: 101%;
+    margin: -2px;
+    filter: grayscale(40%);
+    width: calc(100% + 8px);
 }
 
 .project .project-name {
     text-decoration: none;
     color: inherit;
-    display: inline-block;
     padding: 8px 16px 0 16px;
     color: #121212;
     font-size: 50px;
@@ -167,7 +207,7 @@ h3 {
     transition: 200ms;
 }
 
-.project .project-name:hover::after {
+a:hover .project-name::after {
     opacity: 1;
     transform: rotate(0);
     left: 8px;
@@ -182,8 +222,107 @@ h3 {
     padding: 16px;
 }
 
+#other-sites {
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    width: 240px;
+    max-height: 0;
+    text-align: left;
+    overflow: hidden;
+    background: #fafafa;
+    border-radius: 4px;
+    opacity: 0;
+    /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 1px 5px rgba(0, 0, 0, 0.2);*/
+    box-shadow: 0 5px 12px -3px rgba(0, 0, 0, .08), 0 8px 15px 1px rgba(0, 0, 0, .06), 0 3px 19px 2px rgba(0, 0, 0, .05);
+    transform: scale(0.9);
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.small-icon:hover #other-sites {
+    transform: scale(1);
+    top: 1px;
+    left: 7px;
+    opacity: 1;
+    max-height: 104px;
+}
+
+.other-site img {
+    width: 48px;
+    height: 48px;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.other-site:hover img {
+    transform: scale(1.1);
+}
+
+.other-site:active img {
+    transform: scale(0.9);
+}
+
+#other-sites .other-site {
+    margin: 8px;
+    float: left;
+    width: 64px;
+    text-align: center;
+    color: #444;
+}
+
+#socialfall .divider {
+    display: none;
+}
+
+.hamburger {
+    margin: 9px;
+    display: none;
+    float: left;
+}
+
+.hamburger:hover+nav, nav:hover {
+    opacity: 1;
+}
+
+@keyframes shine {
+    0% {
+        text-shadow: 0 0 0 #eee;
+    }
+    50% {
+        text-shadow: 0 0 30px #eee;
+    }
+    100% {
+        text-shadow: 0 0 0 #eee;
+    }
+}
+@keyframes subtle-shine {
+    0% {
+        text-shadow: 0 0 0 #eee;
+    }
+    50% {
+        text-shadow: 0 0 10px #eee;
+    }
+    100% {
+        text-shadow: 0 0 0 #eee;
+    }
+}
+
 @media screen and (max-width: 500px) {
     body {
         padding: 48px 16px;
+    }
+    nav {
+        position: relative;
+    }
+    .small-icon {
+        position: absolute;
+        left: 0;
+        bottom: -46px;
+    }
+    .search {
+        right: 0;
+        left: unset;
+    }
+    body {
+        padding: 24px 8px;
     }
 }
