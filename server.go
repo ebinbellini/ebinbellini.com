@@ -21,8 +21,8 @@ func main() {
 
 	http.HandleFunc("/", serveTemplate)
 
-	print("Listening on :1337...")
-	err := http.ListenAndServe(":1337", nil)
+	print("Listening on :9001...")
+	err := http.ListenAndServe(":9001", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
