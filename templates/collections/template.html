@@ -1,0 +1,33 @@
+{{define "title"}}{{end}}
+
+{{define "body"}}
+<style>
+    .column {
+        width: 50%;
+        float: left;
+    }
+
+    img {
+        width: calc(100% - 16px);
+        float: left;
+        margin: 8px;
+        border-radius: 4px;
+    }
+
+    .back {
+        display: inline-block;
+        margin: 4px 0 4px 8px;
+        font-size: 20px;
+        color: #fafafa !important;
+        transition: 150ms;
+    }
+
+    .back:hover {
+        text-shadow: 0 0 10px #fafafaea;
+        transform: scale(1.1);
+    }
+</style>
+<!-- TODO STYLE THIS -->
+<a href="../" class="back">&larr; Go back</a>
+<br>
+{{end}}

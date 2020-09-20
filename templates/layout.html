@@ -13,12 +13,10 @@
 	<link rel="icon" type="image/png" sizes="24x24" href="/Icons/ebin24.png">
 	<link rel="icon" type="image/png" sizes="192x192" href="/Icons/ebin192.png">
 
-	<title>Ebin Bellini - {{template "title"}}</title>
+	<title>Ebin Bellini - {{template "title"}}{{.Title}}</title>
 
 	<link href="/main.css" rel="stylesheet" />
 	<link href="/cabin.css" rel="stylesheet" />
-
-	{{template "includes"}}
 </head>
 
 <body>
@@ -175,8 +173,24 @@
 	</div>
 
 	<main>
-		<h2 id="about">{{template "title"}}</h2>
+		<h2 id="about">{{template "title"}}{{.Title}}</h2>
 		{{template "body"}}
+			
+		{{range .Links}}
+			<a class="collection-link" href="{{.Path}}">{{.Name}}</a>
+			<br>
+		{{end}}
+
+		<div class="column">
+			{{range .ImageColumnOne}}
+				<img src="{{.}}">
+			{{end}}
+		</div>
+		<div class="column">
+			{{range .ImageColumnTwo}}
+				<img src="{{.}}">
+			{{end}}
+		</div>
 	</main>
 </body>
 
