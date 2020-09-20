@@ -7,13 +7,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
+	//	"strings"
 )
-
-// IconData Only used on illustrations page
-type IconData struct {
-	Icons []string
-}
 
 func main() {
 	fs := http.FileServer(http.Dir("./static"))
@@ -51,11 +46,7 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 					serveNotFound(w, r)
 				} else {
 					print("serverar templatead fil\n")
-					if tp == filepath.Join("templates", "illustrations", "index.html") {
-						serveIllustrationsPage(w, r, tmpl)
-					} else {
-						tmpl.ExecuteTemplate(w, "layout", nil)
-					}
+					tmpl.ExecuteTemplate(w, "layout", nil)
 				}
 			} else {
 				if os.IsNotExist(err) {
@@ -74,19 +65,6 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 			serveInternalError(w, r)
 		}
 	}
-}
-
-func serveIllustrationsPage(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	data := IconData{Icons: []string{""}}
-	iconFolder := filepath.Join("templates", "illustrations", "mwit")
-	filepath.Walk(iconFolder, func(path string, info os.FileInfo, err error) error {
-		path = strings.Replace(path, "templates\\illustrations\\mwit\\", "", 1)
-		data.Icons = append(data.Icons, path)
-		return nil
-	})
-	data.Icons = removeElementAt(data.Icons, 0)
-	data.Icons = removeElementAt(data.Icons, 1)
-	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
 func serveNotFound(w http.ResponseWriter, r *http.Request) {

@@ -1,0 +1,72 @@
+{{define "title"}}Knåker{{end}}
+
+{{define "includes"}}
+<style>
+	#grid {
+		margin-top: 48px;
+		display: flex;
+		flex-flow: row wrap;
+	}
+
+	.doc {
+		margin: 16px;
+		text-align: center;
+		flex: 1;
+		min-width: 230px;
+		transition: 200ms;
+	}
+
+	.doc h3 {
+		transition: 200ms;
+	}
+
+	.doc img {
+		height: 200px;
+	}
+
+	.doc:hover {
+		transform: scale(1.1);
+	}
+
+	.doc:hover h3 {
+		text-shadow: 0 0 16px #fefefefe;
+	}
+</style>
+{{end}}
+
+{{define "body"}}
+<div class="center-content" style="margin-bottom: 24px">
+	<h4>Only available in Swedish</h3>
+</div>
+<p>
+	Knåker är ett kortspel som bygger på det välkända kortspelet vändtia men skillnaderna mellan dem båda är enorm.
+	Reglerna är uppdelade i två delar: Knåker Basregler som innehåller grundreglerna, och expansionen Knåkerexpansion
+	Månfaser som innehåller regler vilka beror på rådande måntillstånd. Här kan du köpa dessa regler tryckta, eller i
+	form av PDF-dokument, för privat bruk. Frakt ingår inte i priset.
+	Mejla till <a href="mailto:ebinbellini@airmail.cc">ebinbellini@airmail.cc</a> om du är intresserad.
+</p>
+<!-- TODO SKRIV KOPIERING FÖRBJUDEN I REGLERNA -->
+<div id="grid">
+	<a class="doc" href="mailto:ebinbellini@airmail.cc">
+		<img src="bas.png">
+		<h3>Knåker Basregler</h3>
+		<p>6 sidor (om man exkluderar omslaget) av noggrant genomtänkta regler speciellt designade för att göra
+			kortspelet så actionfyllt och underhållande som möjligt</p>
+		<h4>99 kr</h4>
+	</a>
+	<a class="doc" href="mailto:ebinbellini@airmail.cc">
+		<img src="månfaser.png">
+		<h3>Knåkerexpansion - Månfaser</h3>
+		<p>4 sidor med extraordinärt välskrivna regler vars effekt beror på vilken dag du spelar. Detta inför ännu mer
+			dynamik i ett spel där det redan händer en hel del.</p>
+		<h4>69 kr</h4>
+	</a>
+	<a class="doc" href="mailto:ebinbellini@airmail.cc">
+		<img src="dubbel.png">
+		<h3>Basregler + Månfaser 2i1</h3>
+		<p>Köp det kompletta regelverket med både Knåker Basregler och Knåkerexpansion - Månfaser, två i ett. Ett måste
+			för den autentiska knåkerupplevensen och för alla äkta knåkerfantaster. <br>Du sparar: 39 kr.</p>
+		<h4>129 kr</h4>
+	</a>
+</div>
+{{end}}
