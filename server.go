@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"html/template"
 	"log"
@@ -17,21 +18,30 @@ type CollectionLink struct {
 	Path string
 }
 
-type CollectionPageData struct {
+type DocumentMatch struct {
+	Name          string
+	Path          string
+	MatchingWords string
+}
+
+type PageData struct {
 	Links []CollectionLink
 
 	Title          string
 	ImageColumnOne []string
 	ImageColumnTwo []string
+
+	FoundDocuments []DocumentMatch
 }
 
 func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
+	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/", serveTemplate)
 
-	print("Listening on :9001...")
+	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -83,6 +93,71 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func serveQuery(w http.ResponseWriter, r *http.Request) {
+	search := strings.Split(r.FormValue("s"), " ")
+
+	fp := "templates"
+	files := []string{}
+	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
+		if strings.Contains(path, "index.html") {
+			files = append(files, path)
+		}
+		return nil
+	})
+	if err != nil {
+		serveInternalError(w, r)
+	}
+
+	found := []DocumentMatch{}
+	for _, file := range files {
+		f, err := os.Open(file)
+		if err != nil {
+			serveInternalError(w, r)
+		}
+		defer f.Close()
+
+		scanner := bufio.NewScanner(f)
+		scanner.Split(bufio.ScanWords)
+
+		matching := []string{}
+		for scanner.Scan() {
+			text := scanner.Text()
+			for _, str := range search {
+				if strings.Contains(strings.ToLower(text), strings.ToLower(str)) {
+					matching = append(matching, text)
+					continue
+				}
+			}
+		}
+
+		if len(matching) > 0 {
+			parts := strings.Split(file, "\\")
+			title := strings.Title(parts[len(parts)-2])
+			if title == "Templates" {
+				title = "Home"
+			}
+			path := strings.TrimRight(strings.TrimLeft(strings.ReplaceAll(file, "\\", "/"), "templates\\"), ".index.html")
+			found = append(found, DocumentMatch{
+				Name:          title,
+				Path:          path,
+				MatchingWords: strings.Join(matching, ", "),
+			})
+		}
+	}
+
+	data := PageData{
+		FoundDocuments: found,
+	}
+
+	lp := filepath.Join("templates", "layout.html")
+	tp := filepath.Join("templates", "query", "index.html")
+	tmpl, err := template.ParseFiles(lp, tp)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tmpl.ExecuteTemplate(w, "layout", data)
+}
+
 func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
 	lp := filepath.Join("templates", "layout.html")
@@ -100,7 +175,7 @@ func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
 					Path: name + "/",
 				})
 			}
-			data := CollectionPageData{
+			data := PageData{
 				Links: links,
 			}
 			err := tmpl.ExecuteTemplate(w, "layout", data)
@@ -118,7 +193,7 @@ func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
 			images := listCollectionImages(w, r)
 			columnOne := images[:len(images)/2]
 			columnTwo := images[len(images)/2:]
-			data := CollectionPageData{
+			data := PageData{
 				Title:          title,
 				ImageColumnOne: columnOne,
 				ImageColumnTwo: columnTwo,

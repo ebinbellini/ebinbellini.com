@@ -1,0 +1,41 @@
+{{define "title"}}Search{{end}}
+
+{{define "body"}}
+<style>
+    form {
+        text-align: center;
+    }
+    
+    input {
+        padding: 8px 12px;
+        margin: 8px;
+        border: 0;
+        border-radius: 4px;
+        outline: 0;
+        font-size: 20px;
+        background: #232425;
+        color: #fafafa;
+        transition: 250ms;
+        cursor: pointer;
+    }
+
+    input:hover {
+        background: #fafafa;
+        box-shadow: 0 0 12px #fafafaea;
+        color: #242424;
+    }
+
+    input:first-of-type {
+        cursor: vertical-text;
+        width: 350px;
+        max-width: 90%;
+        background: #fafafa;
+        color: #242424;
+    }
+</style>
+
+<form action="/query">
+    <input name="s" type="text">
+    <input type="submit">
+</form>
+{{end}}
