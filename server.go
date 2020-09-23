@@ -11,8 +11,6 @@ import (
 	"strings"
 )
 
-// TODO search using a form without javascript
-
 type CollectionLink struct {
 	Name string
 	Path string
@@ -54,8 +52,8 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 	lp := filepath.Join("templates", "layout.html")
 	fp := filepath.Join("static", filepath.Clean(url))
 
-	if strings.HasPrefix(url, "/collections/") && !strings.Contains(url, ".") {
-		serveCollectionsPage(w, r)
+	if strings.HasPrefix(url, "/gallery/") && !strings.Contains(url, ".") {
+		serveGalleryPage(w, r)
 	} else {
 		// First try to serve from static folder
 		info, err := os.Stat(fp)
@@ -122,16 +120,19 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		matching := []string{}
 		for scanner.Scan() {
 			text := scanner.Text()
+			if strings.Contains(text, "{") || strings.Contains(text, "}") {
+				continue
+			}
 			for _, str := range search {
 				if strings.Contains(strings.ToLower(text), strings.ToLower(str)) {
 					matching = append(matching, text)
-					continue
+					break
 				}
 			}
 		}
 
 		if len(matching) > 0 {
-			parts := strings.Split(file, "\\")
+			parts := strings.Split(strings.ReplaceAll(file, "\\", "/"), "/")
 			title := strings.Title(parts[len(parts)-2])
 			if title == "Templates" {
 				title = "Home"
@@ -158,16 +159,16 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
-func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
+func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
 	lp := filepath.Join("templates", "layout.html")
-	if url == "/collections/" {
-		tp := filepath.Join("templates", "collections", "index.html")
+	if url == "/gallery/" {
+		tp := filepath.Join("templates", "gallery", "index.html")
 		tmpl, err := template.ParseFiles(lp, tp)
 		if err != nil {
 			serveNotFound(w, r)
 		} else {
-			collections := listImageCollections(w, r)
+			collections := listImageGalleryCollections(w, r)
 			links := []CollectionLink{}
 			for _, name := range collections {
 				links = append(links, CollectionLink{
@@ -184,13 +185,13 @@ func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
-		tp := filepath.Join("templates", "collections", "template.html")
+		tp := filepath.Join("templates", "gallery", "template.html")
 		tmpl, err := template.ParseFiles(lp, tp)
 		if err != nil {
 			serveNotFound(w, r)
 		} else {
 			title := strings.Title(strings.ReplaceAll(strings.TrimSuffix(strings.TrimPrefix(url, "/"), "/"), "/", " > "))
-			images := listCollectionImages(w, r)
+			images := listGalleryImages(w, r)
 			columnOne := images[:len(images)/2]
 			columnTwo := images[len(images)/2:]
 			data := PageData{
@@ -206,12 +207,12 @@ func serveCollectionsPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func listImageCollections(w http.ResponseWriter, r *http.Request) []string {
-	fp := filepath.Join("static", "collections")
+func listImageGalleryCollections(w http.ResponseWriter, r *http.Request) []string {
+	fp := filepath.Join("static", "gallery")
 	folders := []string{}
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
 		name := info.Name()
-		if !strings.Contains(name, ".") && name != "collections" {
+		if !strings.Contains(name, ".") && name != "gallery" {
 			folders = append(folders, name)
 		}
 		return nil
@@ -222,7 +223,7 @@ func listImageCollections(w http.ResponseWriter, r *http.Request) []string {
 	return folders
 }
 
-func listCollectionImages(w http.ResponseWriter, r *http.Request) []string {
+func listGalleryImages(w http.ResponseWriter, r *http.Request) []string {
 	url := r.URL.Path
 	fp := filepath.Join("static", url)
 	files := []string{}
