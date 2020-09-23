@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -191,7 +192,11 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 			serveNotFound(w, r)
 		} else {
 			title := strings.Title(strings.ReplaceAll(strings.TrimSuffix(strings.TrimPrefix(url, "/"), "/"), "/", " > "))
-			images := listGalleryImages(w, r)
+			images, err := listGalleryImages(w, r)
+			if err != nil {
+				serveNotFound(w, r)
+				return
+			}
 			columnOne := images[:len(images)/2]
 			columnTwo := images[len(images)/2:]
 			data := PageData{
@@ -199,7 +204,7 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 				ImageColumnOne: columnOne,
 				ImageColumnTwo: columnTwo,
 			}
-			err := tmpl.ExecuteTemplate(w, "layout", data)
+			err = tmpl.ExecuteTemplate(w, "layout", data)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -223,21 +228,24 @@ func listImageGalleryCollections(w http.ResponseWriter, r *http.Request) []strin
 	return folders
 }
 
-func listGalleryImages(w http.ResponseWriter, r *http.Request) []string {
+func listGalleryImages(w http.ResponseWriter, r *http.Request) ([]string, error) {
 	url := r.URL.Path
 	fp := filepath.Join("static", url)
 	files := []string{}
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if strings.Contains(info.Name(), ".") {
 			files = append(files, info.Name())
 		}
 		return nil
 	})
 	if err != nil {
-		serveNotFound(w, r)
+		return nil, errors.New("Image gallery collection " + fp + " not found")
 	}
 
-	return files
+	return files, nil
 }
 
 func serveNotFound(w http.ResponseWriter, r *http.Request) {
