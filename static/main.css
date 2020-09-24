@@ -11,13 +11,21 @@ body {
     color: #fbfcf3;
 }
 
+img {
+    max-width: 100%;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
 a {
     color: inherit;
     text-decoration: none;
     font-weight: 500;
 }
 
-a:not(.doc):not(.button) {
+a:not(.doc):not(.button):not(.option) {
     color: rgb(154, 160, 221);
 }
 
@@ -26,7 +34,6 @@ a:not(.doc):not(.button) {
 }
 
 .divider {
-    margin: 8px 0;
     height: 6px;
     border-top: 2px solid #dddddd;
     border-bottom: 2px solid #dddddd;
@@ -37,7 +44,8 @@ a:not(.doc):not(.button) {
     display: inline-block;
     width: 32px;
     height: 32px;
-    margin: 0 4px;
+    padding: 4px;
+    margin: 0 2px;
     cursor: pointer;
 }
 
@@ -69,7 +77,7 @@ a:not(.doc):not(.button) {
     position: absolute;
     width: fit-content;
     display: inline-block;
-    top: 30px;
+    top: 34px;
     left: -25px;
     right: -25px;
     margin: auto;
@@ -86,7 +94,7 @@ a:not(.doc):not(.button) {
 }
 
 .icon-link:hover tooltip {
-    top: 36px;
+    top: 40px;
     opacity: 1;
 }
 
@@ -98,6 +106,7 @@ a:not(.doc):not(.button) {
 .small-icon {
     position: relative;
     cursor: pointer;
+    margin-top: 10px;
     padding: 0 6px;
     z-index: 8;
     transform: scale(1.1);
@@ -123,8 +132,8 @@ a:not(.doc):not(.button) {
 
 h1 {
     font-size: 72px;
-    margin-bottom: 20px; 
-    line-height: 84px;
+    margin-bottom: 20px;
+    line-height: 72px;
     animation: 8s shine infinite;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -135,8 +144,10 @@ h1 {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    position: relative;
     font-size: 20px;
     margin: 0 6px;
+    line-height: 48px;
     color: #f5f5f5;
     font-weight: 500;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -153,6 +164,46 @@ h1 {
 .button:active {
     transform: scale(0.92);
     text-shadow: 0 1px 6px #ffffff30;
+}
+
+.button.expanding {
+    transform: none !important;
+}
+
+.button .dropdown {
+    position: absolute;
+    top: 24px;
+    left: -10px;
+    display: block;
+    width: 140px;
+    text-align: left;
+    line-height: 44px;
+    background: #fafafa;
+    color: #484848;
+    padding: 8px 0;
+    border-radius: 6px;
+    opacity: 0;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:hover .dropdown {
+    top: 36px;
+    opacity: 1;
+}
+
+.dropdown .option {
+    display: block;
+    padding: 0 12px;
+    transition: 250ms;
+}
+
+.dropdown .option:hover {
+    background: rgba(0, 0, 0, .16);
+}
+
+.dropdown .option:active {
+    background: rgba(0, 0, 0, .28);
+    color: #585858;
 }
 
 .long-white-space {
@@ -181,8 +232,58 @@ h3 {
     font-size: 32px;
 }
 
-/* TODO MOVE TO SEPARATE CSS FILE */
+.card {
+    margin: 24px 0;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fafafa;
+    color: #353535;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .12), 0 8px 10px 1px rgba(0, 0, 0, .10), 0 3px 14px 2px rgba(0, 0, 0, .08);
+}
 
+.card img {
+    filter: grayscale(40%);
+    width: calc(100% + 8px);
+}
+
+.card img:not(:first-of-type) {
+    margin-top: -4px;
+}
+
+.card .card-name {
+    text-decoration: none;
+    color: inherit;
+    padding: 8px 16px 0 16px;
+    color: #121212;
+    font-size: 50px;
+    font-weight: 500;
+    transition: 200ms;
+}
+
+.card a .card-name::after {
+    content: "🡕";
+    position: relative;
+    left: -10px;
+    opacity: 0;
+    transform: rotate(45deg);
+    transition: 200ms;
+}
+
+a:hover .card-name::after {
+    opacity: 1;
+    transform: rotate(0);
+    left: 8px;
+}
+
+.card .card-name:hover {
+    /* ワンツーワンツー　グルグルカクレボ */
+    color: #121212;
+}
+
+.card p {
+    margin: 0;
+    padding: 16px;
+}
 
 #other-sites {
     position: absolute;
@@ -195,8 +296,8 @@ h3 {
     background: #fafafa;
     border-radius: 4px;
     opacity: 0;
-	/*box-shadow: 0 5px 12px -3px rgba(0, 0, 0, .08), 0 8px 15px 1px rgba(0, 0, 0, .06), 0 3px 19px 2px rgba(0, 0, 0, .05);*/
-	box-shadow: 0 0 18px #fefefedd;
+    /*box-shadow: 0 5px 12px -3px rgba(0, 0, 0, .08), 0 8px 15px 1px rgba(0, 0, 0, .06), 0 3px 19px 2px rgba(0, 0, 0, .05);*/
+    box-shadow: 0 0 18px #fefefedd;
     transform: scale(0.9);
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -215,7 +316,7 @@ h3 {
     height: 48px;
 }
 
-.other-site:hover{
+.other-site:hover {
     transform: scale(1.1);
 }
 
@@ -258,6 +359,7 @@ h3 {
         text-shadow: 0 0 0 #eee;
     }
 }
+
 @keyframes subtle-shine {
     0% {
         text-shadow: 0 0 0 #eee;
