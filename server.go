@@ -93,7 +93,8 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveQuery(w http.ResponseWriter, r *http.Request) {
-	search := strings.Split(r.FormValue("s"), " ")
+	searchQueryValue := r.FormValue("s")
+	search := strings.Split(searchQueryValue, " ")
 
 	fp := "templates"
 	files := []string{}
@@ -142,13 +143,25 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 			found = append(found, DocumentMatch{
 				Name:          title,
 				Path:          path,
-				MatchingWords: strings.Join(matching, ", "),
+				MatchingWords: "Contains: " + strings.Join(matching, ", "),
 			})
 		}
 	}
 
 	data := PageData{
 		FoundDocuments: found,
+	}
+
+	if len(data.FoundDocuments) == 0 {
+		data = PageData{
+			FoundDocuments: []DocumentMatch{
+				DocumentMatch{
+					Name: "",
+					Path: "#",
+					MatchingWords: "No results found for \"" + searchQueryValue + "\".",
+				},
+			},
+		}
 	}
 
 	lp := filepath.Join("templates", "layout.html")
