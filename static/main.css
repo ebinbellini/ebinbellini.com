@@ -11,6 +11,10 @@ body {
     color: #fbfcf3;
 }
 
+nav {
+    z-index: 5;
+}
+
 img {
     max-width: 100%;
 }
@@ -45,7 +49,6 @@ a:not(.doc):not(.button):not(.option) {
     width: 32px;
     height: 32px;
     padding: 4px;
-    margin: 0 2px;
     cursor: pointer;
 }
 
@@ -175,7 +178,7 @@ h1 {
     top: 24px;
     left: -10px;
     display: block;
-    width: 140px;
+    width: 130px;
     text-align: left;
     line-height: 44px;
     background: #fafafa;
@@ -382,7 +385,7 @@ a:hover .card-name::after {
     .small-icon {
         position: absolute;
         left: 0;
-        bottom: -46px;
+        bottom: -53px;
     }
     .search {
         right: 0;
@@ -395,7 +398,7 @@ a:hover .card-name::after {
         padding: 24px 8px;
     }
     .button .dropdown {
-	left: unset;
-	right: 0;
+        left: unset;
+        right: 0;
     }
 }
