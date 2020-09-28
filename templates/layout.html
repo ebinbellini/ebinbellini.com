@@ -73,7 +73,7 @@
 				</div>
 			</div>
 
-			<a class="button" href="/">Home</a>
+			<a class="button" href="/">About</a>
 			<a class="button" href="/projects/">Projects</a>
 			<a class="button" href="/knaker/">Knåker</a>
 			<div class="button expanding">More
@@ -184,8 +184,15 @@
 		{{template "body"}}
 
 		{{range .Links}}
-		<a class="collection-link" href="{{.Path}}">{{.Name}}</a>
-		<br>
+		<div class="card">
+			<a href="{{.Path}}">
+				<img src="{{.Path}}{{.Image}}">
+				<div class="card-name">{{.Name}}</div>
+			</a>
+			<p>
+				Contains {{.ImgCount}} images
+			</p>
+		</div>
 		{{end}}
 
 		<div class="column">
@@ -200,9 +207,9 @@
 		</div>
 
 		{{range .FoundDocuments}}
-			<a href="{{.Path}}">{{.Name}}</a>
-			{{.MatchingWords}}
-			<br>
+		<a href="{{.Path}}">{{.Name}}</a>
+		{{.MatchingWords}}
+		<br>
 		{{end}}
 	</main>
 </body>

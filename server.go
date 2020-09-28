@@ -13,8 +13,10 @@ import (
 )
 
 type CollectionLink struct {
-	Name string
-	Path string
+	Name     string
+	Path     string
+	Image    string
+	ImgCount int
 }
 
 type DocumentMatch struct {
@@ -156,8 +158,8 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		data = PageData{
 			FoundDocuments: []DocumentMatch{
 				DocumentMatch{
-					Name: "",
-					Path: "#",
+					Name:          "",
+					Path:          "#",
 					MatchingWords: "No results found for \"" + searchQueryValue + "\".",
 				},
 			},
@@ -182,14 +184,7 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			serveNotFound(w, r)
 		} else {
-			collections := listImageGalleryCollections(w, r)
-			links := []CollectionLink{}
-			for _, name := range collections {
-				links = append(links, CollectionLink{
-					Name: strings.Title(name),
-					Path: name + "/",
-				})
-			}
+			links := imageGalleryCollectionLinks(w, r)
 			data := PageData{
 				Links: links,
 			}
@@ -225,20 +220,27 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func listImageGalleryCollections(w http.ResponseWriter, r *http.Request) []string {
+func imageGalleryCollectionLinks(w http.ResponseWriter, r *http.Request) []CollectionLink {
 	fp := filepath.Join("static", "gallery")
-	folders := []string{}
+	links := []CollectionLink{}
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
 		name := info.Name()
+		file, err := os.Open(path)
+		images, _ := file.Readdirnames(0)
 		if !strings.Contains(name, ".") && name != "gallery" {
-			folders = append(folders, name)
+			links = append(links, CollectionLink{
+				Name:     strings.Title(name),
+				Path:     name + "/",
+				Image:    images[0],
+				ImgCount: len(images),
+			})
 		}
 		return nil
 	})
 	if err != nil {
 		serveInternalError(w, r)
 	}
-	return folders
+	return links
 }
 
 func listGalleryImages(w http.ResponseWriter, r *http.Request) ([]string, error) {
