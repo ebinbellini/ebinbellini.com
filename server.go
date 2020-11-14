@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -19,6 +20,12 @@ type CollectionLink struct {
 	ImgCount int
 }
 
+type BlogLink struct {
+	Name string
+	Path string
+	Text string
+}
+
 type DocumentMatch struct {
 	Name          string
 	Path          string
@@ -26,7 +33,8 @@ type DocumentMatch struct {
 }
 
 type PageData struct {
-	Links []CollectionLink
+	Links     []CollectionLink
+	BlogLinks []BlogLink
 
 	Title          string
 	ImageColumnOne []string
@@ -41,6 +49,7 @@ func main() {
 
 	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/", serveTemplate)
+	http.HandleFunc("/blog/", serveBlogPage)
 
 	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
@@ -173,6 +182,61 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	tmpl.ExecuteTemplate(w, "layout", data)
+}
+
+func serveBlogPage(w http.ResponseWriter, r *http.Request) {
+	lp := filepath.Join("templates", "layout.html")
+	tp := filepath.Join("templates", "blog", "index.html")
+	tmpl, err := template.ParseFiles(lp, tp)
+	if err != nil {
+		serveNotFound(w, r)
+	} else {
+		links := blogPostLinks(w, r)
+		if links == nil {
+			serveNotFound(w, r)
+			return
+		}
+		data := PageData{BlogLinks: links}
+		err := tmpl.ExecuteTemplate(w, "layout", data)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+}
+
+func blogPostLinks(w http.ResponseWriter, r *http.Request) []BlogLink {
+	fp := filepath.Join("static", "blog")
+	links := []BlogLink{}
+	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
+		name := info.Name()
+		contentPath := filepath.Join(path, "index.html")
+		file, err := os.Open(contentPath)
+		defer file.Close()
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		if !strings.Contains(name, ".") && name != "blog" {
+			buf := new(strings.Builder)
+			_, err := io.Copy(buf, file)
+			if err != nil {
+				fmt.Println(err)
+				return nil
+			}
+
+			links = append(links, BlogLink{
+				Name: strings.Title(name),
+				Path: name + "/",
+				Text: buf.String(),
+			})
+		}
+		return nil
+	})
+	if err != nil {
+		serveInternalError(w, r)
+	}
+
+	return links
 }
 
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {

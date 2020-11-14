@@ -74,10 +74,11 @@
 			</div>
 
 			<a class="button" href="/">About</a>
-			<a class="button" href="/projects/">Projects</a>
 			<a class="button" href="/knaker/">Knåker</a>
+			<a class="button" href="/blog/">Blog</a>
 			<div class="button expanding">More&dtrif;
 				<div class="dropdown">
+					<a class="option" href="/projects/">Projects</a>
 					<a class="option" href="/gallery/">Gallery</a>
 					<a class="option" href="/design/">Design</a>
 					<a class="option" href="/spook2020/">Spook2020</a>
@@ -183,6 +184,15 @@
 	<main>
 		<h2 id="about">{{template "title"}}{{.Title}}</h2>
 		{{template "body"}}
+
+		{{range .BlogLinks}}
+		<div class="card">
+			<div class="card-name">{{.Name}}</div>
+			<p>
+				{{.Text}}
+			</p>
+		</div>
+		{{end}}
 
 		{{range .Links}}
 		<div class="card">
