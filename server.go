@@ -20,10 +20,11 @@ type CollectionLink struct {
 	ImgCount int
 }
 
-type BlogLink struct {
-	Name string
-	Path string
-	Text string
+type BlogPost struct {
+	Name    string
+	Path    string
+	Content template.HTML
+	Tags    []string
 }
 
 type DocumentMatch struct {
@@ -33,8 +34,9 @@ type DocumentMatch struct {
 }
 
 type PageData struct {
-	Links     []CollectionLink
-	BlogLinks []BlogLink
+	Links       []CollectionLink
+	BlogPosts   []BlogPost
+	SelectedTag string
 
 	Title          string
 	ImageColumnOne []string
@@ -184,6 +186,16 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
+func stringArrayHas(array []string, target string) bool {
+	for _, s := range array {
+		if s == target {
+			return true
+		}
+	}
+
+	return false
+}
+
 func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 	lp := filepath.Join("templates", "layout.html")
 	tp := filepath.Join("templates", "blog", "index.html")
@@ -191,12 +203,39 @@ func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		serveNotFound(w, r)
 	} else {
-		links := blogPostLinks(w, r)
-		if links == nil {
+		posts := blogPosts(w, r)
+		if posts == nil {
 			serveNotFound(w, r)
 			return
 		}
-		data := PageData{BlogLinks: links}
+
+		data := PageData{}
+
+		// Filter the posts by tags TODO
+		url := r.URL.Path
+		filtered := []BlogPost{}
+		tag := strings.Split(url, "/")[2]
+		if tag != "" {
+			data.SelectedTag = tag
+
+			for _, post := range posts {
+				if stringArrayHas(post.Tags, tag) {
+					filtered = append(filtered, post)
+				}
+			}
+
+			posts = filtered
+		}
+
+		// Reverse posts
+		for i, j := 0, len(posts)-1; i < j; i, j = i+1, j-1 {
+			posts[i], posts[j] = posts[j], posts[i]
+		}
+
+		data.BlogPosts = posts
+
+		fmt.Println("DEN VALDA TAGGEN ÄR.... ", data.SelectedTag)
+
 		err := tmpl.ExecuteTemplate(w, "layout", data)
 		if err != nil {
 			fmt.Println(err)
@@ -204,39 +243,88 @@ func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func blogPostLinks(w http.ResponseWriter, r *http.Request) []BlogLink {
+func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 	fp := filepath.Join("static", "blog")
-	links := []BlogLink{}
+
+	// Gather all blog posts in an array
+	posts := []BlogPost{}
+
+	// Walk through all files in blog folder
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
+		// Only interesteed in folders
+		if !info.IsDir() {
+			return nil
+		}
+
 		name := info.Name()
 		contentPath := filepath.Join(path, "index.html")
 		file, err := os.Open(contentPath)
+		if err != nil {
+			return nil
+		}
 		defer file.Close()
+
+		buf := new(strings.Builder)
+		_, err = io.Copy(buf, file)
 		if err != nil {
 			fmt.Println(err)
 			return nil
 		}
-		if !strings.Contains(name, ".") && name != "blog" {
-			buf := new(strings.Builder)
-			_, err := io.Copy(buf, file)
-			if err != nil {
-				fmt.Println(err)
-				return nil
-			}
 
-			links = append(links, BlogLink{
-				Name: strings.Title(name),
-				Path: name + "/",
-				Text: buf.String(),
-			})
-		}
+		// Store this post
+		posts = append(posts, BlogPost{
+			Name:    name,
+			Path:    name + "/",
+			Content: template.HTML(buf.String()),
+			Tags:    extractBlogPostTags(contentPath),
+		})
+
 		return nil
 	})
 	if err != nil {
 		serveInternalError(w, r)
 	}
 
-	return links
+	return posts
+}
+
+func extractBlogPostTags(path string) []string {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+
+	tags := []string{}
+
+	line, err := reader.ReadString('\n')
+	if err != nil && err != io.EOF {
+		return tags
+	}
+
+	// Skip looking for tags if the file does not start with a tag container
+	if !strings.Contains(line, `<div class="tags">`) {
+		return tags
+	}
+
+	for {
+		line, err = reader.ReadString('\n')
+		if err != nil && err != io.EOF {
+			break
+		}
+
+		// Return at the end of the tag container
+		if strings.Contains(line, `</div>`) {
+			return tags
+		}
+
+		// Get tag from within quotation marks
+		tags = append(tags, strings.Split(line, `"`)[1])
+	}
+
+	return tags
 }
 
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {

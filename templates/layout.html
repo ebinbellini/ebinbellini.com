@@ -185,12 +185,17 @@
 		<h2 id="about">{{template "title"}}{{.Title}}</h2>
 		{{template "body"}}
 
-		{{range .BlogLinks}}
+		{{if .SelectedTag}}
+			Showing only posts marked with #{{.SelectedTag}}.
+			<a href="/blog/">Clear filter</a>
+		{{end}}
+
+		{{range .BlogPosts}}
 		<div class="card">
 			<div class="card-name">{{.Name}}</div>
-			<p>
-				{{.Text}}
-			</p>
+			<article>
+				{{.Content}}
+			</article>
 		</div>
 		{{end}}
 
