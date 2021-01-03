@@ -185,6 +185,12 @@
 		<h2 id="about">{{template "title"}}{{.Title}}</h2>
 		{{template "body"}}
 
+		{{if .BlogPosts}}
+			<div class="center-content" style="margin-bottom: 24px">
+				<h4><img src="/icons/warning.svg" style="position: relative; top: 2px"> Warning: may contain Swedish</h4>
+			</div>
+		{{end}}
+
 		{{if .SelectedTag}}
 			Showing only posts marked with #{{.SelectedTag}}.
 			<a href="/blog/">Clear filter</a>
