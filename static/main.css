@@ -206,7 +206,7 @@ h1 {
     transform: scale(1);
     opacity: 1;
     box-shadow: 0 0 7px #fafafa;
-    max-height: 200px;
+    max-height: 224px;
 }
 
 .dropdown .option {
