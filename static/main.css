@@ -6,9 +6,9 @@ body {
     padding: 48px 12px;
     margin: auto;
     max-width: 675px;
-    font-family: "Cabin", sans-serif;
-    background: #36383a;
-    color: #fbfcf3;
+    font-family: "Nimbus Roman", serif;
+    color: #101010;
+    background: #f4f4f4;
     font-size: 18px;
 }
 
@@ -20,12 +20,15 @@ img {
     max-width: 100%;
 }
 
-p {
+p, article {
+    font-family: serif;
     margin-bottom: 16px;
+    text-align: justify;
 }
 
 article {
-    margin: 0 16px 16px 16px;
+    font-family: serif;
+    margin: 0 20px 16px 20px;
     font-size: 18px;
     color: #3d3d3d;
 }
@@ -33,11 +36,11 @@ article {
 a {
     color: inherit;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 a:not(.doc):not(.button):not(.option) {
-    color: #7a80bb;
+    color: #a74646;
 }
 
 .center-content {
@@ -46,8 +49,8 @@ a:not(.doc):not(.button):not(.option) {
 
 .divider {
     height: 6px;
-    border-top: 2px solid #dddddd;
-    border-bottom: 2px solid #dddddd;
+    border-top: 2px solid #101010;
+    border-bottom: 2px solid #101010;
 }
 
 .icon-link {
@@ -61,7 +64,7 @@ a:not(.doc):not(.button):not(.option) {
 
 .icon-link path, .icon-link ellipse, .icon-link circle {
     transition: 200ms;
-    stroke: #f1f1f1 !important;
+    stroke: #000 !important;
 }
 
 .icon-link svg {
@@ -71,12 +74,11 @@ a:not(.doc):not(.button):not(.option) {
 .icon-link:hover svg {
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(1.1);
-    box-shadow: 0 0 10px #fafafa80;
 }
 
 .icon-link:hover path, .icon-link:hover ellipse, .icon-link:hover circle {
-    stroke: #fff !important;
-    fill: #ffffff80 !important;
+    stroke: #202020 !important;
+    fill: #00000080 !important;
 }
 
 .icon-link:active {
@@ -94,12 +96,9 @@ a:not(.doc):not(.button):not(.option) {
     border-radius: 4px;
     padding: 2px 6px;
     text-decoration: none !important;
-    background: #fafafa;
-    color: #5a5a5a;
+    background: #101010;
+    color: #fafafa;
     opacity: 0;
-    /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 1px 5px rgba(0, 0, 0, 0.2);*/
-    /*box-shadow: 0 5px 12px -3px rgba(0, 0, 0, .08), 0 8px 15px 1px rgba(0, 0, 0, .06), 0 3px 19px 2px rgba(0, 0, 0, .05);*/
-    box-shadow: 0 0 7px #fafafa;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -131,26 +130,28 @@ a:not(.doc):not(.button):not(.option) {
     transform: scale(1);
 }
 
-.searchsvg path {
+.small-icon svg path {
     transition: 200ms;
+    stroke: #101010 !important;
+    fill: #00000000 !important;
 }
 
 .small-icon:hover svg path, .small-icon:active svg path {
-    stroke: #fff !important;
-    fill: #ffffff30 !important;
+    fill: #00000060 !important;
 }
 
 h1 {
     font-size: 72px;
+    font-variant: small-caps;
     margin-bottom: 20px;
     line-height: 72px;
-    animation: 8s shine infinite;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button {
     position: relative;
     top: 0;
+    font-variant: small-caps;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
@@ -158,22 +159,17 @@ h1 {
     font-size: 20px;
     margin: 0 6px;
     line-height: 48px;
-    color: #f5f5f5;
-    font-weight: 500;
+    font-weight: 700;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button:hover {
-    /*top: -3px;
-    border-bottom: 2px solid #fff;*/
-    color: #fff;
+    color: #000;
     transform: scale(1.08);
-    text-shadow: 0 1px 8px #ffffffaa;
 }
 
 .button:active {
     transform: scale(0.92);
-    text-shadow: 0 1px 6px #ffffff30;
 }
 
 .button.expanding {
@@ -188,24 +184,22 @@ h1 {
     width: 130px;
     text-align: left;
     line-height: 44px;
-    background: #fafafa;
-    color: #484848;
+    background: #f4f4f4;
+    color: #101010;
+    border: 2px solid #101010;
     padding: 8px 0;
     z-index: 24;
-    border-radius: 6px;
     opacity: 0;
     max-height: 0;
     transform: scale(0.95);
     overflow-y: hidden;
     z-index: 24;
-    box-shadow: 0 0 7px #fafafa00;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button:hover .dropdown {
     transform: scale(1);
     opacity: 1;
-    box-shadow: 0 0 7px #fafafa;
     max-height: 224px;
 }
 
@@ -216,7 +210,8 @@ h1 {
 }
 
 .dropdown .option:hover {
-    background: rgba(0, 0, 0, .16);
+    background: #101010;
+    color: #f4f4f4;
 }
 
 .dropdown .option:active {
@@ -237,13 +232,10 @@ h1 {
 h2, h3 {
     margin-top: 32px;
     text-align: center;
-    line-height: 150%;
+    line-height: 120%;
+    margin-bottom: 16px;
     font-size: 50px;
-    font-weight: 700;
-}
-
-h2 {
-    text-shadow: 0 0 10px #eeeeeec7;
+    font-weight: 500;
 }
 
 h3 {
@@ -252,12 +244,12 @@ h3 {
 
 .card {
     margin: 24px 0;
+    border-radius: 4px;
     overflow: hidden;
-    border-radius: 8px;
     background: #fafafa;
     font-size: 18px;
     color: #353535;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .18), 0 3px 14px 2px rgba(0, 0, 0, .16);
+    border: 2px solid #353535;
 }
 
 .card img {
@@ -272,10 +264,10 @@ h3 {
 .card .card-name {
     text-decoration: none;
     color: inherit;
-    padding: 8px 16px 0 16px;
+    padding: 16px 24px 0 24px;
     color: #121212;
     font-size: 50px;
-    font-weight: 500;
+    font-weight: 700;
     transition: 200ms;
 }
 
@@ -301,7 +293,7 @@ a:hover .card-name::after {
 
 .card p {
     margin: 0;
-    padding: 16px;
+    padding: 16px 24px 24px 24px;
 }
 
 #other-sites {
@@ -312,22 +304,22 @@ a:hover .card-name::after {
     max-height: 0;
     text-align: left;
     overflow: hidden;
-    background: #fafafa;
-    border-radius: 4px;
+    background: #f4f4f4;
+    border: 0 solid #101010;
+    padding: 0;
     opacity: 0;
-    /*box-shadow: 0 5px 12px -3px rgba(0, 0, 0, .08), 0 8px 15px 1px rgba(0, 0, 0, .06), 0 3px 19px 2px rgba(0, 0, 0, .05);*/
-    box-shadow: 0 0 18px #fefefedd;
     transform: scale(0.9);
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .small-icon:hover #other-sites {
     transform: scale(1);
+    border: 2px solid #101010;
     top: 1px;
     left: 7px;
     opacity: 1;
-    padding: 4px;
-    max-height: 182px;
+    padding: 16px 8px 0 8px;
+    max-height: 222px;
 }
 
 .other-site img {
@@ -344,12 +336,13 @@ a:hover .card-name::after {
 }
 
 #other-sites .other-site {
-    margin: 8px;
+    margin: 8px 8px 24px 8px;
     float: left;
     width: 80px;
     font-size: 18px;
+    font-variant: small-caps;
     text-align: center;
-    color: #444;
+    color: #101010;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -381,8 +374,8 @@ a:hover .card-name::after {
     line-height: 120%;
     margin: 4px 0;
     color: #ffffff;
-    margin: 4px -16px;
-    padding: 4px 16px 4px 36px;
+    margin: 4px -20px;
+    padding: 4px 20px 4px 36px;
     position: relative;
 }
 
@@ -391,7 +384,7 @@ a:hover .card-name::after {
 }
 
 .removed {
-    background: #7a80bb;
+    background: #b05858;
 }
 
 .added::before, .removed::before {
@@ -406,30 +399,6 @@ a:hover .card-name::after {
     content: "-";
 }
 
-
-@keyframes shine {
-    0% {
-        text-shadow: 0 0 0 #eee;
-    }
-    50% {
-        text-shadow: 0 0 30px #eee;
-    }
-    100% {
-        text-shadow: 0 0 0 #eee;
-    }
-}
-
-@keyframes subtle-shine {
-    0% {
-        text-shadow: 0 0 0 #eee;
-    }
-    50% {
-        text-shadow: 0 0 10px #eee;
-    }
-    100% {
-        text-shadow: 0 0 0 #eee;
-    }
-}
 
 @media screen and (max-width: 500px) {
     body {

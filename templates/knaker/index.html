@@ -14,14 +14,19 @@
 
 	.doc {
 		margin: 16px;
-		text-align: center;
 		flex: 1;
+    	text-align: center;
 		min-width: 230px;
 		transition: 200ms;
 	}
 
+	.doc p {
+		text-align: left;
+	}
+
 	.doc h3 {
 		transition: 200ms;
+		text-align: left;
 	}
 
 	.doc img {
@@ -31,14 +36,10 @@
 	.doc:hover {
 		transform: scale(1.1);
 	}
-
-	.doc:hover h3 {
-		text-shadow: 0 0 16px #fefefefe;
-	}
 </style>
 
 <div class="center-content" style="margin-bottom: 24px">
-	<h4>Only available in Swedish</h3>
+	<h4><img src="/Icons/warning.svg" style="position: relative; top: 2px"> Only available in Swedish</h3>
 </div>
 <p>
 	Knåker är ett kortspel som bygger på det välkända kortspelet vändtia men skillnaderna mellan dem båda är enorm.
@@ -67,14 +68,5 @@
 		</p>
 		<h4>25 kr</h4>
 	</a>
-	<!--<a class="doc" href="mailto:ebinbellini@airmail.cc">
-		<img src="dubbel.png">
-		<h3>Basregler + Månfaser 2i1</h3>
-		<p>Köp det kompletta regelverket i tryck med både Knåker Basregler och Knåkerexpansion - Månfaser, två i ett. Ett
-			måste
-			för den autentiska knåkerupplevensen och för alla äkta knåkerfantaster.
-		</p>
-		<h4>49 kr</h4>
-	</a>-->
 </div>
 {{end}}
