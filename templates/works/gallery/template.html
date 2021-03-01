@@ -1,0 +1,43 @@
+{{define "title"}}{{end}}
+
+{{define "body"}}
+<style>
+    .column {
+        width: 50%;
+        float: left;
+    }
+
+    img {
+        width: calc(100% - 16px);
+        float: left;
+        margin: 8px;
+        border-radius: 4px;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 8px;
+        padding: 8px;
+        font-size: 20px;
+        color: #101010 !important;
+    }
+
+    .back::before {
+        content: "←";
+        width: 0;
+        overflow: hidden;
+        transition: 200ms cubic-bezier(0, 0, 0, 1);
+        opacity: 0;
+        float: left;
+    }
+
+    .back:hover::before {
+        width: 24px;
+        opacity: 1;
+    }
+</style>
+<div class="center-content">
+    <a href="../" class="back">Back to gallery</a>
+</div>
+<br>
+{{end}}

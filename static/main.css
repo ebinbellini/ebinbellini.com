@@ -3,17 +3,45 @@
 }
 
 body {
-    padding: 48px 12px;
-    margin: auto;
-    max-width: 675px;
     font-family: "Nimbus Roman", serif;
-    color: #101010;
-    background: #f4f4f4;
+    color: #080808;
+    background: #f5f5f5;
     font-size: 18px;
 }
 
+main {
+    max-width: 675px;
+    margin: 0 auto 32px auto;
+    padding: 0 24px;
+}
+
 nav {
-    z-index: 5;
+    text-align: center;
+    background: #f5f5f5;
+    position: sticky;
+    padding-top: 16px;
+    top: -88px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+}
+
+nav .nav-content {
+    max-width: 680px;
+    padding: 0 24px;
+    margin: auto;
+}
+
+.divider, .small-divider {
+    width: 100%;
+    border-bottom: 1px solid #2d2d2d;
+    margin-bottom: 3px;
+}
+
+.small-divider {
+    width: 64px;
+    border-bottom: 2px solid #707070;
+    margin: 12px auto 8px auto;
 }
 
 img {
@@ -40,17 +68,11 @@ a {
 }
 
 a:not(.doc):not(.button):not(.option) {
-    color: #a74646;
+    color: #791818;
 }
 
 .center-content {
     text-align: center;
-}
-
-.divider {
-    height: 6px;
-    border-top: 2px solid #101010;
-    border-bottom: 2px solid #101010;
 }
 
 .icon-link {
@@ -112,38 +134,49 @@ a:not(.doc):not(.button):not(.option) {
     opacity: 0.5;
 }
 
+.nav-icon-buttons {
+    position: sticky;
+    z-index: 4;
+    box-sizing: border-box;
+    top: 64px;
+    max-width: 680px;
+    width: calc(100% - 32px);
+    left: 16px;
+    right: 16px;
+    margin: 0 auto;
+    transform: translateY(-48px);
+}
+
 .small-icon {
-    position: relative;
-    cursor: pointer;
-    margin-top: 10px;
-    padding: 0 6px;
-    z-index: 8;
+    position: absolute;
+    top: 0;
+    right: 0;
     transform: scale(1.1);
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.search:hover {
-    transform: scale(1.2);
-}
-
-.search:active {
-    transform: scale(1);
+.nav-icon-buttons>.small-icon:first-child {
+    z-index: 2;
+    left: 0;
+    right: unset;
 }
 
 .small-icon svg path {
-    transition: 200ms;
     stroke: #101010 !important;
-    fill: #00000000 !important;
+    transition: 1000ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .small-icon:hover svg path, .small-icon:active svg path {
-    fill: #00000060 !important;
+    fill: #00000030 !important;
+}
+
+.search {
+    cursor: pointer;
 }
 
 h1 {
     font-size: 72px;
     font-variant: small-caps;
-    margin-bottom: 20px;
     line-height: 72px;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -158,14 +191,25 @@ h1 {
     position: relative;
     font-size: 20px;
     margin: 0 6px;
-    line-height: 48px;
+    line-height: 56px;
     font-weight: 700;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.button:hover {
-    color: #000;
-    transform: scale(1.08);
+.button::after {
+    content: "";
+    width: 0%;
+    display: inline-block;
+    height: 2px;
+    background: #8b1414;
+    position: absolute;
+    left: 0;
+    bottom: 12px;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:hover::after {
+    width: 100%;
 }
 
 .button:active {
@@ -184,16 +228,15 @@ h1 {
     width: 130px;
     text-align: left;
     line-height: 44px;
-    background: #f4f4f4;
+    background: #f5f5f5;
     color: #101010;
     border: 2px solid #101010;
     padding: 8px 0;
-    z-index: 24;
     opacity: 0;
     max-height: 0;
     transform: scale(0.95);
     overflow-y: hidden;
-    z-index: 24;
+    z-index: 2;
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -211,7 +254,7 @@ h1 {
 
 .dropdown .option:hover {
     background: #101010;
-    color: #f4f4f4;
+    color: #f5f5f5;
 }
 
 .dropdown .option:active {
@@ -265,25 +308,28 @@ h3 {
     text-decoration: none;
     color: inherit;
     padding: 16px 24px 0 24px;
+    line-height: 110%;
     color: #121212;
     font-size: 50px;
     font-weight: 700;
     transition: 200ms;
 }
 
-.card a .card-name::after {
+.card .card-name::after {
     content: "🡕";
     position: relative;
-    left: -10px;
+    top: 16px;
+    display: inline-block;
+    margin-left: -36px;
+    overflow: hidden;
     opacity: 0;
-    transform: rotate(45deg);
-    transition: 200ms;
+    transition: margin-left 200ms cubic-bezier(0.6, 0.1, 0.5, 0.9), opacity 200ms cubic-bezier(0.1, 0.7, 0.2, 1.1);
 }
 
 a:hover .card-name::after {
+    transition: margin-left 200ms cubic-bezier(0, 0.5, 0.2, 1), opacity 200ms cubic-bezier(0.86, 0.01, 0.6, 1.05);
+    margin-left: 0px;
     opacity: 1;
-    transform: rotate(0);
-    left: 8px;
 }
 
 .card .card-name:hover {
@@ -298,25 +344,21 @@ a:hover .card-name::after {
 
 #other-sites {
     position: absolute;
-    top: -3px;
-    left: 2px;
+    top: 13px;
+    left: 13px;
     width: 298px;
     max-height: 0;
     text-align: left;
     overflow: hidden;
-    background: #f4f4f4;
-    border: 0 solid #101010;
+    background: #f5f5f5;
+    border: 0 solid #2b2b2b;
     padding: 0;
     opacity: 0;
-    transform: scale(0.9);
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .small-icon:hover #other-sites {
-    transform: scale(1);
-    border: 2px solid #101010;
-    top: 1px;
-    left: 7px;
+    border-width: 1px;
     opacity: 1;
     padding: 16px 8px 0 8px;
     max-height: 222px;
@@ -336,8 +378,8 @@ a:hover .card-name::after {
 }
 
 #other-sites .other-site {
-    margin: 8px 8px 24px 8px;
-    float: left;
+    padding: 8px 8px 24px 8px;
+    display: inline-block;
     width: 80px;
     font-size: 18px;
     font-variant: small-caps;
@@ -346,18 +388,8 @@ a:hover .card-name::after {
     transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#socialfall .divider {
-    display: none;
-}
-
-.hamburger {
-    margin: 9px;
-    display: none;
-    float: left;
-}
-
-.hamburger:hover+nav, nav:hover {
-    opacity: 1;
+#socialfall {
+    margin-top: 16px;
 }
 
 .tags {
@@ -399,31 +431,34 @@ a:hover .card-name::after {
     content: "-";
 }
 
-
 @media screen and (max-width: 500px) {
-    body {
-        padding: 48px 16px;
-    }
-    nav {
-        position: relative;
-    }
-    .small-icon {
-        position: absolute;
-        left: 0;
-        bottom: -53px;
-    }
     .search {
-        right: 0;
+        right: 16px;
         left: unset;
     }
     .button {
+        line-height: 48px;
         font-size: 18px;
     }
-    body {
-        padding: 24px 8px;
+    main {
+        padding: 0 16px;
     }
-    .button .dropdown {
-        left: unset;
-        right: 0;
+    body {
+        font-size: 16px;
+    }
+    nav {
+        top: -58px;
+    }
+    h1 {
+        font-size: 48px;
+        line-height: 42px;
+    }
+    nav .nav-content {
+        padding: 0;
+    }
+    .nav-icon-buttons {
+        margin: 16px 0 -4px 16px;
+        position: static;
+        transform: translate(0);
     }
 }

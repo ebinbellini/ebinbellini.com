@@ -66,7 +66,7 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 	lp := filepath.Join("templates", "layout.html")
 	fp := filepath.Join("static", filepath.Clean(url))
 
-	if strings.HasPrefix(url, "/gallery/") && !strings.Contains(url, ".") {
+	if strings.HasPrefix(url, "/works/gallery/") && !strings.Contains(url, ".") {
 		serveGalleryPage(w, r)
 	} else {
 		// First try to serve from static folder
@@ -211,7 +211,6 @@ func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 
 		data := PageData{}
 
-		// Filter the posts by tags TODO
 		url := r.URL.Path
 		filtered := []BlogPost{}
 		tag := strings.Split(url, "/")[2]
@@ -330,8 +329,8 @@ func extractBlogPostTags(path string) []string {
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
 	lp := filepath.Join("templates", "layout.html")
-	if url == "/gallery/" {
-		tp := filepath.Join("templates", "gallery", "index.html")
+	if url == "/works/gallery/" {
+		tp := filepath.Join("templates", "works", "gallery", "index.html")
 		tmpl, err := template.ParseFiles(lp, tp)
 		if err != nil {
 			serveNotFound(w, r)
@@ -346,12 +345,12 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
-		tp := filepath.Join("templates", "gallery", "template.html")
+		tp := filepath.Join("templates", "works", "gallery", "template.html")
 		tmpl, err := template.ParseFiles(lp, tp)
 		if err != nil {
 			serveNotFound(w, r)
 		} else {
-			title := strings.Title(strings.ReplaceAll(strings.TrimSuffix(strings.TrimPrefix(url, "/"), "/"), "/", " > "))
+			title := strings.Title(strings.ReplaceAll(strings.TrimSuffix(strings.TrimPrefix(url, "/works/"), "/"), "/", " > "))
 			images, err := listGalleryImages(w, r)
 			if err != nil {
 				serveNotFound(w, r)
@@ -373,12 +372,14 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func imageGalleryCollectionLinks(w http.ResponseWriter, r *http.Request) []CollectionLink {
-	fp := filepath.Join("static", "gallery")
+	fp := filepath.Join("static", "works", "gallery")
 	links := []CollectionLink{}
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
 		name := info.Name()
 		file, err := os.Open(path)
 		images, _ := file.Readdirnames(0)
+		defer file.Close()
+
 		if !strings.Contains(name, ".") && name != "gallery" {
 			links = append(links, CollectionLink{
 				Name:     strings.Title(name),

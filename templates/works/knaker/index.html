@@ -1,0 +1,72 @@
+{{define "title"}}Knåker{{end}}
+
+{{define "body"}}
+<style>
+	body {
+		overflow-x: hidden;
+	}
+
+	#grid {
+		margin-top: 48px;
+		display: flex;
+		flex-flow: row wrap;
+	}
+
+	.doc {
+		margin: 16px;
+		flex: 1;
+    	text-align: center;
+		min-width: 230px;
+		transition: 200ms;
+	}
+
+	.doc p {
+		text-align: left;
+	}
+
+	.doc h3 {
+		transition: 200ms;
+		text-align: left;
+	}
+
+	.doc img {
+		height: 200px;
+	}
+
+	.doc:hover {
+		transform: scale(1.1);
+	}
+</style>
+
+<div class="center-content" style="margin-bottom: 24px">
+	<h4><img src="/Icons/warning.svg" style="position: relative; top: 2px"> Only available in Swedish</h3>
+</div>
+<p>
+	Knåker är ett kortspel som bygger på det välkända kortspelet vändtia men skillnaderna mellan dem båda är enorm.
+	Reglerna är uppdelade i två delar: Knåker Basregler som innehåller grundreglerna, och expansionen Knåkerexpansion
+	Månfaser som innehåller regler vilka beror på rådande måntillstånd. Här kan du köpa dessa regler i form av
+	PDF-dokument, för privat bruk. Kvitto ingår.
+	Mejla till <a href="mailto:ebinbellini@airmail.cc">ebinbellini@airmail.cc</a> om du är intresserad.
+</p>
+<div id="grid">
+	<a class="doc" href="basregler.pdf">
+		<img src="bas.png">
+		<h3>Knåker Basregler</h3>
+		<p>
+			Noggrant genomtänkta grundregler speciellt designade för att göra kortspelet så actionfyllt och
+			underhållande som möjligt.
+			Klicka här för att komma till den senaste PDF:en.
+		</p>
+		<h4>Gratis</h4>
+	</a>
+	<a class="doc" href="mailto:ebinbellini@airmail.cc">
+		<img src="månfaser.png">
+		<h3>Knåkerexpansion - Månfaser</h3>
+		<p>
+			Extraordinärt välskrivna regler vars effekt beror på vilken dag du spelar. Detta inför ännu mer
+			dynamik i ett spel där det redan händer en hel del.
+		</p>
+		<h4>25 kr</h4>
+	</a>
+</div>
+{{end}}
