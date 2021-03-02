@@ -413,11 +413,11 @@ a:hover .card-name::after {
 }
 
 .added {
-    background: #bbaa63;
+    background: #c9b666;
 }
 
 .removed {
-    background: #b05858;
+    background: #7d4646;
 }
 
 .added::before, .removed::before {

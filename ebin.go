@@ -52,6 +52,7 @@ func main() {
 	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/blog/", serveBlogPage)
+	http.HandleFunc("/knaker/", redirectToKnaker)
 
 	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
@@ -324,6 +325,10 @@ func extractBlogPostTags(path string) []string {
 	}
 
 	return tags
+}
+
+func redirectToKnaker(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://ebinbellini.top/works/knaker/", http.StatusMovedPermanently)
 }
 
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
