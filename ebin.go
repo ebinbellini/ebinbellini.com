@@ -50,10 +50,11 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/blog/", serveBlogPage)
 	http.HandleFunc("/knaker", redirectToKnaker)
+	http.HandleFunc("/knaker/", redirectToKnaker)
+	http.HandleFunc("/query/", serveQuery)
 
 	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
@@ -342,7 +343,7 @@ func extractBlogPostTags(path string) []string {
 }
 
 func redirectToKnaker(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://ebinbellini.top/works/knaker/", http.StatusMovedPermanently)
+	http.Redirect(w, r, "https://ebinbellini.top/works/" + r.URL.Path, http.StatusMovedPermanently)
 }
 
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
