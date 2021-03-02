@@ -168,7 +168,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	if len(data.FoundDocuments) == 0 {
 		data = PageData{
 			FoundDocuments: []DocumentMatch{
-				DocumentMatch{
+				{
 					Name:          "",
 					Path:          "#",
 					MatchingWords: "No results found for \"" + searchQueryValue + "\".",

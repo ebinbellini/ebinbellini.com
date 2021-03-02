@@ -138,13 +138,13 @@ a:not(.doc):not(.button):not(.option) {
     position: sticky;
     z-index: 4;
     box-sizing: border-box;
-    top: 64px;
+    top: 140px;
     max-width: 680px;
     width: calc(100% - 32px);
     left: 16px;
     right: 16px;
     margin: 0 auto;
-    transform: translateY(-48px);
+    transform: translateY(-124px);
 }
 
 .small-icon {
@@ -163,7 +163,8 @@ a:not(.doc):not(.button):not(.option) {
 
 .small-icon svg path {
     stroke: #101010 !important;
-    transition: 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+    fill: #00000000 !important;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .small-icon:hover svg path, .small-icon:active svg path {
@@ -361,7 +362,7 @@ a:hover .card-name::after {
     border-width: 1px;
     opacity: 1;
     padding: 16px 8px 0 8px;
-    max-height: 222px;
+    max-height: 224px;
 }
 
 .other-site img {
@@ -457,8 +458,11 @@ a:hover .card-name::after {
         padding: 0;
     }
     .nav-icon-buttons {
-        margin: 16px 0 -4px 16px;
+        margin: -56px 0 80px 16px;
         position: static;
         transform: translate(0);
+    }
+    #other-sites {
+        width: 198px;
     }
 }
