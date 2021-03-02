@@ -52,7 +52,6 @@ func main() {
 
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/blog/", serveBlogPage)
-	http.HandleFunc("/knaker", redirectToKnaker)
 	http.HandleFunc("/knaker/", redirectToKnaker)
 	http.HandleFunc("/query/", serveQuery)
 
@@ -82,6 +81,12 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 				tp := filepath.Join("templates", filepath.Clean(url), "index.html")
 				_, err := os.Stat(tp)
 				if err == nil {
+					// Add a / to the end of the URL if there isn't on already
+					if !strings.HasSuffix(url, "/") {
+						http.Redirect(w, r, url+"/", http.StatusMovedPermanently)
+						return
+					}
+
 					tmpl, err := template.ParseFiles(lp, tp)
 					if err != nil {
 						serveNotFound(w, r)
@@ -343,7 +348,15 @@ func extractBlogPostTags(path string) []string {
 }
 
 func redirectToKnaker(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://ebinbellini.top/works/" + r.URL.Path, http.StatusMovedPermanently)
+	// Add a / to the end of the URL if there isn't on already
+	url := r.URL.Path
+	suffix := ""
+	if !strings.HasSuffix(url, "/") {
+		suffix = "/"
+	}
+
+	// Redirect to the correct URL
+	http.Redirect(w, r, "/works"+r.URL.Path+suffix, http.StatusMovedPermanently)
 }
 
 func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
@@ -445,8 +458,3 @@ func serveInternalError(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
 	http.ServeFile(w, r, filepath.Join("templates", "error.html"))
 }
-
-/*func removeElementAt(s []string, i int) []string {
-	s[i] = s[len(s)-1]
-	return s[:len(s)-1]
-}*/
