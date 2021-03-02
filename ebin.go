@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -52,7 +53,7 @@ func main() {
 	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/blog/", serveBlogPage)
-	http.HandleFunc("/knaker/", redirectToKnaker)
+	http.HandleFunc("/knaker", redirectToKnaker)
 
 	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
@@ -63,7 +64,6 @@ func main() {
 
 func serveTemplate(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Path
-	print("förstöker serveraa " + url + "\n")
 	lp := filepath.Join("templates", "layout.html")
 	fp := filepath.Join("static", filepath.Clean(url))
 
@@ -75,7 +75,6 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 		if err == nil {
 			// Serve static file
 			if !info.IsDir() {
-				fmt.Println("static file found", fp)
 				http.ServeFile(w, r, fp)
 			} else {
 				// If static file does not exist try templates folder
@@ -97,7 +96,7 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			if os.IsNotExist(err) {
-				print("hittade inte " + fp + "\n")
+				print("Couldn't find " + fp + "\n")
 				serveNotFound(w, r)
 			} else {
 				serveInternalError(w, r)
@@ -120,6 +119,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		serveInternalError(w, r)
+		return
 	}
 
 	found := []DocumentMatch{}
@@ -130,10 +130,14 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		}
 		defer f.Close()
 
-		scanner := bufio.NewScanner(f)
-		scanner.Split(bufio.ScanWords)
+		parts := strings.Split(strings.ReplaceAll(file, "\\", "/"), "/")
+		title := strings.Title(parts[len(parts)-2])
 
 		matching := []string{}
+
+		// Match against text content
+		scanner := bufio.NewScanner(f)
+		scanner.Split(bufio.ScanWords)
 		for scanner.Scan() {
 			text := scanner.Text()
 			if strings.Contains(text, "{") || strings.Contains(text, "}") {
@@ -147,9 +151,21 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		// Match against title
+		for _, str := range search {
+			if strings.Contains(strings.ToLower(title), strings.ToLower(str)) {
+				matching = append(matching, title)
+				break
+			}
+		}
+
+		// Clean up matches
+		for i, match := range matching {
+			re := regexp.MustCompile(`(.*\=\")|(\/\"\>$)|(\"\/\>$)|(\<\/.*\>$)|(</.*>)|("\>)|(,)`)
+			matching[i] = strings.TrimSpace(string(re.ReplaceAll([]byte(match), []byte(" "))))
+		}
+
 		if len(matching) > 0 {
-			parts := strings.Split(strings.ReplaceAll(file, "\\", "/"), "/")
-			title := strings.Title(parts[len(parts)-2])
 			if title == "Templates" {
 				title = "Home"
 			}
@@ -233,8 +249,6 @@ func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 		}
 
 		data.BlogPosts = posts
-
-		fmt.Println("DEN VALDA TAGGEN ÄR.... ", data.SelectedTag)
 
 		err := tmpl.ExecuteTemplate(w, "layout", data)
 		if err != nil {
