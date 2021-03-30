@@ -388,7 +388,6 @@ a:hover .card-name::after {
 
 @media screen and (max-width: 500px) {
     .search {
-        right: 16px;
         left: unset;
     }
     .button {
