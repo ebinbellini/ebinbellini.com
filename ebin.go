@@ -136,7 +136,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		}
 		defer f.Close()
 
-		parts := strings.Split(strings.ReplaceAll(file, "\\", "/"), "/")
+		parts := strings.Split(strings.Replace(file, "\\", "/", -1), "/")
 		title := strings.Title(parts[len(parts)-2])
 
 		matching := []string{}
@@ -175,7 +175,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 			if title == "Templates" {
 				title = "Home"
 			}
-			path := strings.TrimRight(strings.TrimLeft(strings.ReplaceAll(file, "\\", "/"), "templates\\"), ".index.html")
+			path := strings.TrimRight(strings.TrimLeft(strings.Replace(file, "\\", "/", -1), "templates\\"), ".index.html")
 			found = append(found, DocumentMatch{
 				Name:          title,
 				Path:          path,
@@ -383,7 +383,7 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			serveNotFound(w, r)
 		} else {
-			title := strings.Title(strings.ReplaceAll(strings.TrimSuffix(strings.TrimPrefix(url, "/works/"), "/"), "/", " > "))
+			title := strings.Title(strings.Replace(strings.TrimSuffix(strings.TrimPrefix(url, "/works/"), "/"), "/", " > ", -1))
 			images, err := listGalleryImages(w, r)
 			if err != nil {
 				serveNotFound(w, r)
