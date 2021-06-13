@@ -20,7 +20,7 @@ nav {
     background: #f5f5f5;
     position: sticky;
     padding-top: 16px;
-    top: -170px;
+    top: -179px;
     left: 0;
     right: 0;
     z-index: 3;
@@ -324,10 +324,10 @@ a:hover .card-name::after {
 }
 
 .other-site:hover {
-    transform: scale(1.1);
+    transform: scale(1.07);
 }
 
-.other-site:active img {
+.other-site:active {
     transform: scale(0.9);
 }
 
@@ -339,7 +339,7 @@ a:hover .card-name::after {
     font-variant: small-caps;
     text-align: center;
     color: #101010;
-    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 175ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #socialfall {
