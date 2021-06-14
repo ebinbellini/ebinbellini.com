@@ -56,7 +56,6 @@ p, article {
 article {
     margin: 0 20px 16px 20px;
     font-size: 18px;
-    color: #3d3d3d;
 }
 
 :not(.card) > p:first-of-type:first-letter,
@@ -254,7 +253,6 @@ h3 {
     overflow: hidden;
     background: #fafafa;
     font-size: 18px;
-    color: #353535;
     border: 2px solid #353535;
 }
 
@@ -300,9 +298,19 @@ a:hover .card-name::after {
     color: #121212;
 }
 
-.card p {
+/* Not blog posts */
+.card > p {
     margin: 0;
     padding: 16px 24px 24px 24px;
+}
+
+/* Blog posts */
+.blogpost > article > p:first-of-type {
+    margin-top: 12px;
+}
+
+.blogpost .card-name {
+    padding-top: 0;
 }
 
 #other-sites {
@@ -333,11 +341,12 @@ a:hover .card-name::after {
 }
 
 .other-site:hover {
-    transform: scale(1.07);
+    transform: translateY(-4px);
 }
 
 .other-site:active {
     transform: scale(0.9);
+    color: #303030 !important;
 }
 
 #other-sites .other-site {
@@ -348,7 +357,7 @@ a:hover .card-name::after {
     font-variant: small-caps;
     text-align: center;
     color: #101010;
-    transition: 175ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #socialfall {
@@ -425,5 +434,11 @@ a:hover .card-name::after {
     }
     #other-sites {
         width: 198px;
+    }
+}
+
+@media screen and (max-width: 571px) {
+    nav {
+        top: calc(48px + 12px - 28vw - 79.158px) !important;
     }
 }
