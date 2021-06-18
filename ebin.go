@@ -350,7 +350,7 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 		// Store this post
 		posts = append(posts, BlogPost{
 			Name:       name,
-			Path:       "https://ebinbellin.top/blog/" + name + "/",
+			Path:       "https://ebinbellini.top/blog/" + name + "/",
 			Desc:       desc,
 			Content:    template.HTML(buf.String()),
 			Tags:       extractBlogPostTags(contentPath),
