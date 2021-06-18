@@ -148,6 +148,11 @@ a.doc  {
     opacity: 0.5;
 }
 
+#rss-icon {
+    transform: translateY(8px);
+    margin-top: 16px;
+}
+
 .nav-icon-buttons {
     position: sticky;
     z-index: 4;
