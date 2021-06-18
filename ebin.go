@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	texttemplate "text/template"
+	"time"
 )
 
 type CollectionLink struct {
@@ -26,6 +28,11 @@ type BlogPost struct {
 	Path    string
 	Content template.HTML
 	Tags    []string
+
+	// Used in RSS
+	PubDate    string
+	Desc       string
+	LastChange string
 }
 
 type DocumentMatch struct {
@@ -46,6 +53,12 @@ type PageData struct {
 	FoundDocuments []DocumentMatch
 }
 
+type FeedData struct {
+	LastPostTime   string
+	LastChangeTime string
+	Posts          []BlogPost
+}
+
 func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -54,6 +67,7 @@ func main() {
 	http.HandleFunc("/blog/", serveBlogPage)
 	http.HandleFunc("/knaker/", redirectToKnaker)
 	http.HandleFunc("/query/", serveQuery)
+	http.HandleFunc("/rss/", serveRSS)
 
 	fmt.Println("Listening on :9001...")
 	err := http.ListenAndServe(":9001", nil)
@@ -209,6 +223,23 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
+func serveRSS(w http.ResponseWriter, r *http.Request) {
+	posts := blogPosts(w, r)
+	if posts == nil {
+		serveNotFound(w, r)
+		return
+	}
+
+	data := FeedData{
+		LastPostTime:   posts[0].PubDate,
+		LastChangeTime: posts[0].LastChange,
+		Posts:          posts,
+	}
+
+	tmpl := texttemplate.Must(texttemplate.ParseFiles("rss.xml"))
+	tmpl.ExecuteTemplate(w, "RSS", data)
+}
+
 func stringArrayHas(array []string, target string) bool {
 	for _, s := range array {
 		if s == target {
@@ -291,12 +322,39 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 			return nil
 		}
 
+		// Create a sneak peak of the content
+		desc := buf.String()
+		// Remove HTML tags, tabs, and carriage returns
+		re := regexp.MustCompile(`(<div .*</div>)|(<.*>)|(</.*>)|(<.*/>)|(\t+)|(\r)`)
+		desc = strings.TrimSpace(string(re.ReplaceAll([]byte(desc), []byte(""))))
+		// Remove new lines (put everything on one line)
+		re = regexp.MustCompile(`(\n)`)
+		desc = string(re.ReplaceAll([]byte(desc), []byte(" ")))
+		// Limit the string to 150 bytes
+		if len(desc) > 150 {
+			desc = strings.TrimSpace(desc[0:149]) + "..."
+		}
+
+		// Time format for XML
+		const rfc2822 = "Mon Jan 02 15:04:05 -0700 2006"
+		const titleformat = "2006-01-02"
+
+		datePublished, err := time.Parse(titleformat, name)
+
+		if err != nil {
+			serveInternalError(w, r)
+		}
+		pubDate := datePublished.Format(rfc2822)
+
 		// Store this post
 		posts = append(posts, BlogPost{
-			Name:    name,
-			Path:    name + "/",
-			Content: template.HTML(buf.String()),
-			Tags:    extractBlogPostTags(contentPath),
+			Name:       name,
+			Path:       "https://ebinbellin.top/blog/" + name + "/",
+			Desc:       desc,
+			Content:    template.HTML(buf.String()),
+			Tags:       extractBlogPostTags(contentPath),
+			PubDate:    pubDate,
+			LastChange: info.ModTime().Format(rfc2822),
 		})
 
 		return nil

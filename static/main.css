@@ -81,6 +81,10 @@ a:not(.doc):not(.button):not(.option) {
     color: #791818;
 }
 
+a.doc  {
+    font-weight: 400;
+}
+
 .center-content {
     text-align: center;
 }

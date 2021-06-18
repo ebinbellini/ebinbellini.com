@@ -1,0 +1,37 @@
+{{define "RSS"}}<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>Ebin Bellni Blog</title>
+		<link>https://ebinbellini.top/blog/</link>
+		<description>It is I, Ebin Bellini</description>
+		<copyright>(c) Ebin Bellini 2021</copyright>
+
+		<pubDate>{{.LastPostTime}}</pubDate>
+		<lastBuildDate>{{.LastChangeTime}}</lastBuildDate>
+
+		<managingEditor>ebinbellini@airmail.cc</managingEditor>
+		<webMaster>ebinbellini@airmail.cc</webMaster>
+
+		<image>
+			<title>Ebin Bellini Logo</title>
+			<url>https://ebinbellini.top/Imgs/logo.svg</url>
+			<link>https://ebinbellini.top</link>
+
+			<width>557</width>
+			<height>156</height>
+			<description>The logo for the ebinbellini.top website</description>
+		</image>
+		{{range .Posts}}
+		<item>
+			<title>{{.Name}}</title>
+			<link>{{.Path}}</link>
+			<description>{{.Desc}}</description>
+
+			<author>Ebin Bellini</author>
+
+			<guid>{{.Path}}</guid>
+			<pubDate>{{.PubDate}}</pubDate>
+		</item>
+		{{end}}
+	</channel>
+</rss>{{end}}
