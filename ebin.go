@@ -230,7 +230,6 @@ func serveRSS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(posts)
 	last := posts[len(posts)-1]
 	data := FeedData{
 		LastPostTime:   last.PubDate,
