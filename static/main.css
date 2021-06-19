@@ -62,8 +62,7 @@ article {
     font-size: 18px;
 }
 
-:not(.card) > p:first-of-type:first-letter,
-.drop-cap::first-letter {
+:not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
     font-size: 82px;
     float: left;
     line-height: 53px;
@@ -81,7 +80,7 @@ a:not(.doc):not(.button):not(.option) {
     color: #791818;
 }
 
-a.doc  {
+a.doc {
     font-weight: 400;
 }
 
@@ -312,13 +311,15 @@ a:hover .card-name::after {
 }
 
 /* Not blog posts */
-.card > p {
+
+.card>p {
     margin: 0;
     padding: 16px 24px 24px 24px;
 }
 
 /* Blog posts */
-.blogpost > article > p:first-of-type {
+
+.blogpost>article>p:first-of-type {
     margin-top: 12px;
 }
 
@@ -414,6 +415,32 @@ a:hover .card-name::after {
 
 .removed:before {
     content: "-";
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 8px;
+    font-size: 20px;
+    color: #101010 !important;
+}
+
+.back::before {
+    content: "←";
+    width: 0;
+    overflow: hidden;
+    transition: 200ms cubic-bezier(0, 0, 0, 1);
+    opacity: 0;
+    float: left;
+}
+
+.back:hover::before {
+    width: 24px;
+    opacity: 1;
+}
+
+.back+.card {
+    margin-top: 0;
 }
 
 @media screen and (max-width: 500px) {

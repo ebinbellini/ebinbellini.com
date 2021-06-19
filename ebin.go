@@ -50,6 +50,8 @@ type PageData struct {
 	ImageColumnOne []string
 	ImageColumnTwo []string
 
+	SinglePost bool
+
 	FoundDocuments []DocumentMatch
 }
 
@@ -65,6 +67,7 @@ func main() {
 
 	http.HandleFunc("/", serveTemplate)
 	http.HandleFunc("/blog/", serveBlogPage)
+	http.HandleFunc("/blog/post/", serveBlogPost)
 	http.HandleFunc("/knaker/", redirectToKnaker)
 	http.HandleFunc("/query/", serveQuery)
 	http.HandleFunc("/rss/", serveRSS)
@@ -257,41 +260,76 @@ func serveBlogPage(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles(lp, tp)
 	if err != nil {
 		serveNotFound(w, r)
-	} else {
-		posts := blogPosts(w, r)
-		if posts == nil {
-			serveNotFound(w, r)
-			return
-		}
+		return
+	}
 
-		data := PageData{}
+	posts := blogPosts(w, r)
+	if posts == nil {
+		serveNotFound(w, r)
+		return
+	}
 
-		url := r.URL.Path
-		filtered := []BlogPost{}
-		tag := strings.Split(url, "/")[2]
-		if tag != "" {
-			data.SelectedTag = tag
+	data := PageData{}
 
-			for _, post := range posts {
-				if stringArrayHas(post.Tags, tag) {
-					filtered = append(filtered, post)
-				}
+	url := r.URL.Path
+	filtered := []BlogPost{}
+	tag := strings.Split(url, "/")[2]
+	if tag != "" {
+		data.SelectedTag = tag
+
+		for _, post := range posts {
+			if stringArrayHas(post.Tags, tag) {
+				filtered = append(filtered, post)
 			}
-
-			posts = filtered
 		}
 
-		// Reverse posts
-		for i, j := 0, len(posts)-1; i < j; i, j = i+1, j-1 {
-			posts[i], posts[j] = posts[j], posts[i]
-		}
+		posts = filtered
+	}
 
-		data.BlogPosts = posts
+	// Reverse posts
+	for i, j := 0, len(posts)-1; i < j; i, j = i+1, j-1 {
+		posts[i], posts[j] = posts[j], posts[i]
+	}
 
-		err := tmpl.ExecuteTemplate(w, "layout", data)
-		if err != nil {
-			fmt.Println(err)
-		}
+	data.BlogPosts = posts
+
+	err = tmpl.ExecuteTemplate(w, "layout", data)
+	if err != nil {
+		serveInternalError(w, r)
+	}
+}
+
+func serveBlogPost(w http.ResponseWriter, r *http.Request) {
+	location := filepath.Join("static", strings.ReplaceAll(strings.TrimLeft(r.URL.Path, "/"), "/post", ""))
+
+	lp := filepath.Join("templates", "layout.html")
+	tp := filepath.Join("templates", "blog", "index.html")
+	tmpl, err := template.ParseFiles(lp, tp)
+	if err != nil {
+		serveNotFound(w, r)
+		return
+	}
+
+	info, err := os.Stat(location)
+	if err != nil {
+		serveNotFound(w, r)
+		return
+	}
+
+	post, err := getBlogPostData(location, info)
+	if err != nil {
+		serveInternalError(w, r)
+		return
+	}
+
+	data := PageData{
+		BlogPosts:  []BlogPost{post},
+		SinglePost: true,
+	}
+
+	err = tmpl.ExecuteTemplate(w, "layout", data)
+	if err != nil {
+		serveInternalError(w, r)
 	}
 }
 
@@ -308,55 +346,18 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 			return nil
 		}
 
-		name := info.Name()
-		contentPath := filepath.Join(path, "index.html")
-		file, err := os.Open(contentPath)
-		if err != nil {
+		// Skip the static/blog folder
+		baseFolder := filepath.Join("static", "blog")
+		if path == baseFolder {
 			return nil
 		}
-		defer file.Close()
 
-		buf := new(strings.Builder)
-		_, err = io.Copy(buf, file)
+		post, err := getBlogPostData(path, info)
 		if err != nil {
 			fmt.Println(err)
-			return nil
-		}
-
-		// Create a sneak peak of the content
-		desc := buf.String()
-		// Remove HTML tags, tabs, and carriage returns
-		re := regexp.MustCompile(`(<div .*</div>)|(<.*>)|(</.*>)|(<.*/>)|(\t+)|(\r)`)
-		desc = strings.TrimSpace(string(re.ReplaceAll([]byte(desc), []byte(""))))
-		// Remove new lines (put everything on one line)
-		re = regexp.MustCompile(`(\n)`)
-		desc = string(re.ReplaceAll([]byte(desc), []byte(" ")))
-		// Limit the string to 150 bytes
-		if len(desc) > 150 {
-			desc = strings.TrimSpace(desc[0:149]) + "..."
-		}
-
-		// Time format for XML
-		const rfc2822 = "Mon Jan 02 15:04:05 -0700 2006"
-		const titleformat = "2006-01-02"
-
-		datePublished, err := time.Parse(titleformat, name)
-
-		if err != nil {
 			serveInternalError(w, r)
 		}
-		pubDate := datePublished.Format(rfc2822)
-
-		// Store this post
-		posts = append(posts, BlogPost{
-			Name:       name,
-			Path:       "https://ebinbellini.top/blog/" + name + "/",
-			Desc:       desc,
-			Content:    template.HTML(buf.String()),
-			Tags:       extractBlogPostTags(contentPath),
-			PubDate:    pubDate,
-			LastChange: info.ModTime().Format(rfc2822),
-		})
+		posts = append(posts, post)
 
 		return nil
 	})
@@ -365,6 +366,58 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 	}
 
 	return posts
+}
+
+func getBlogPostData(path string, info os.FileInfo) (BlogPost, error) {
+	name := info.Name()
+	contentPath := filepath.Join(path, "index.html")
+
+	file, err := os.Open(contentPath)
+	if err != nil {
+		return BlogPost{}, err
+	}
+	defer file.Close()
+
+	// Read entire blog post file
+	buf := new(strings.Builder)
+	_, err = io.Copy(buf, file)
+	if err != nil {
+		return BlogPost{}, err
+	}
+
+	// Create a sneak peak of the content
+	desc := buf.String()
+	// Remove HTML tags, tabs, and carriage returns
+	re := regexp.MustCompile(`(<div .*</div>)|(<.*>)|(</.*>)|(<.*/>)|(\t+)|(\r)`)
+	desc = strings.TrimSpace(string(re.ReplaceAll([]byte(desc), []byte(""))))
+	// Remove new lines (put everything on one line)
+	re = regexp.MustCompile(`(\n)`)
+	desc = string(re.ReplaceAll([]byte(desc), []byte(" ")))
+	// Limit the string to 150 bytes
+	if len(desc) > 150 {
+		desc = strings.TrimSpace(desc[0:146]) + "..."
+	}
+
+	// Time format for XML
+	const rfc2822 = "Mon Jan 02 15:04:05 -0700 2006"
+	const titleformat = "2006-01-02"
+
+	datePublished, err := time.Parse(titleformat, name)
+	if err != nil {
+		return BlogPost{}, err
+	}
+	pubDate := datePublished.Format(rfc2822)
+
+	return BlogPost{
+		Name: name,
+		// TODO Make pages for individual posts
+		Path:       "https://ebinbellini.top/blog/post/" + name + "/",
+		Desc:       desc,
+		Content:    template.HTML(buf.String()),
+		Tags:       extractBlogPostTags(contentPath),
+		PubDate:    pubDate,
+		LastChange: info.ModTime().Format(rfc2822),
+	}, nil
 }
 
 func extractBlogPostTags(path string) []string {

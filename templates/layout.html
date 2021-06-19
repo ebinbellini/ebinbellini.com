@@ -220,9 +220,15 @@
 		<a href="/blog/">Clear filter</a>
 		{{end}}
 
+		{{if .SinglePost}}
+		<a href="/blog/" class="back">Back to blog</a>
+		{{end}}
+
 		{{range .BlogPosts}}
 		<div class="card blogpost">
-			<div class="card-name">{{.Name}}</div>
+			<a href="{{.Path}}">
+				<div class="card-name">{{.Name}}</div>
+			</a>
 			<article>
 				{{.Content}}
 			</article>
