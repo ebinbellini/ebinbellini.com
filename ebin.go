@@ -409,8 +409,7 @@ func getBlogPostData(path string, info os.FileInfo) (BlogPost, error) {
 	pubDate := datePublished.Format(rfc2822)
 
 	return BlogPost{
-		Name: name,
-		// TODO Make pages for individual posts
+		Name:       name,
 		Path:       "https://ebinbellini.top/blog/post/" + name + "/",
 		Desc:       desc,
 		Content:    template.HTML(buf.String()),
@@ -453,7 +452,7 @@ func extractBlogPostTags(path string) []string {
 		}
 
 		// Get tag from within quotation marks
-		tags = append(tags, strings.Split(line, `"`)[1])
+		tags = append(tags, strings.Split(strings.Split(line, `"`)[1], "/")[2])
 	}
 
 	return tags
