@@ -38,7 +38,7 @@ nav .nav-content {
 
 .divider, .small-divider {
     width: 100%;
-    border-bottom: 1px solid #2d2d2d;
+    border-bottom: 2px solid #2d2d2d;
     margin-bottom: 3px;
 }
 
@@ -84,6 +84,10 @@ a.doc {
     font-weight: 400;
 }
 
+a, .button, .icon-link, .search {
+    cursor: url(/Imgs/bat.png), pointer;
+}
+
 .center-content {
     text-align: center;
 }
@@ -94,7 +98,6 @@ a.doc {
     width: 32px;
     height: 32px;
     padding: 4px;
-    cursor: pointer;
 }
 
 .icon-link path, .icon-link ellipse, .icon-link circle {
@@ -189,10 +192,6 @@ a.doc {
     fill: #00000030 !important;
 }
 
-.search {
-    cursor: pointer;
-}
-
 h1 {
     font-size: 72px;
     font-variant: small-caps;
@@ -206,7 +205,6 @@ h1 {
     font-variant: small-caps;
     text-decoration: none;
     display: inline-block;
-    cursor: pointer;
     position: relative;
     font-size: 20px;
     margin: 0 6px;
