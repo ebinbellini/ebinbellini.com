@@ -129,27 +129,72 @@ func serveTemplate(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveQuery(w http.ResponseWriter, r *http.Request) {
-	searchQueryValue := r.FormValue("s")
-	search := strings.Split(searchQueryValue, " ")
+	data := PageData{}
 
+	searchQueryValue := r.FormValue("s")
+	if len(searchQueryValue) > 100 {
+		// Search query too long
+		data = PageData{
+			FoundDocuments: []DocumentMatch{
+				{
+					Name:          "",
+					Path:          "#",
+					MatchingWords: "Your query is too long. Please use at most 100 characters.",
+				},
+			},
+		}
+	} else {
+		// Perform search
+		search := strings.Split(searchQueryValue, " ")
+		found, err := findMatchingDocuments(search)
+
+		if err != nil {
+			serveInternalError(w, r)
+			return
+		}
+
+		data.FoundDocuments = found
+
+		if len(data.FoundDocuments) == 0 {
+			data = PageData{
+				FoundDocuments: []DocumentMatch{
+					{
+						Name:          "",
+						Path:          "#",
+						MatchingWords: "No results found for \"" + searchQueryValue + "\".",
+					},
+				},
+			}
+		}
+	}
+
+	lp := filepath.Join("templates", "layout.html")
+	tp := filepath.Join("templates", "query", "index.html")
+	tmpl, err := template.ParseFiles(lp, tp)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tmpl.ExecuteTemplate(w, "layout", data)
+}
+
+func findMatchingDocuments(search []string) (matches []DocumentMatch, err error) {
 	fp := "templates"
 	files := []string{}
-	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
 		if strings.Contains(path, "index.html") {
 			files = append(files, path)
 		}
 		return nil
 	})
 	if err != nil {
-		serveInternalError(w, r)
 		return
 	}
 
-	found := []DocumentMatch{}
+	matches = []DocumentMatch{}
 	for _, file := range files {
 		f, err := os.Open(file)
 		if err != nil {
-			serveInternalError(w, r)
+			return nil, err
 		}
 		defer f.Close()
 
@@ -193,7 +238,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 				title = "Home"
 			}
 			path := strings.TrimRight(strings.TrimLeft(strings.Replace(file, "\\", "/", -1), "templates\\"), ".index.html")
-			found = append(found, DocumentMatch{
+			matches = append(matches, DocumentMatch{
 				Name:          title,
 				Path:          path,
 				MatchingWords: "Contains: " + strings.Join(matching, ", "),
@@ -201,29 +246,7 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data := PageData{
-		FoundDocuments: found,
-	}
-
-	if len(data.FoundDocuments) == 0 {
-		data = PageData{
-			FoundDocuments: []DocumentMatch{
-				{
-					Name:          "",
-					Path:          "#",
-					MatchingWords: "No results found for \"" + searchQueryValue + "\".",
-				},
-			},
-		}
-	}
-
-	lp := filepath.Join("templates", "layout.html")
-	tp := filepath.Join("templates", "query", "index.html")
-	tmpl, err := template.ParseFiles(lp, tp)
-	if err != nil {
-		fmt.Println(err)
-	}
-	tmpl.ExecuteTemplate(w, "layout", data)
+	return
 }
 
 func serveRSS(w http.ResponseWriter, r *http.Request) {
@@ -410,7 +433,7 @@ func getBlogPostData(path string, info os.FileInfo) (BlogPost, error) {
 
 	return BlogPost{
 		Name:       name,
-		Path:       "https://ebinbellini.top/blog/post/" + name + "/",
+		Path:       "https://ebinbellini.com/blog/post/" + name + "/",
 		Desc:       desc,
 		Content:    template.HTML(buf.String()),
 		Tags:       extractBlogPostTags(contentPath),

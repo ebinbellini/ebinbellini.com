@@ -63,11 +63,14 @@ article {
 }
 
 :not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
-    font-size: 82px;
+    font-size: 62px;
     float: left;
-    line-height: 53px;
-    padding-top: 11px;
-    padding-right: 2px;
+    line-height: 50px;
+    padding-top: 15px;
+    padding-right: 4px;
+    margin-left: -3px;
+    font-family: "Typographer Woodcut Initials One";
+    display: inline-block;
 }
 
 a {

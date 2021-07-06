@@ -2,7 +2,7 @@
 <rss version="2.0">
 	<channel>
 		<title>Ebin Bellni Blog</title>
-		<link>https://ebinbellini.top/blog/</link>
+		<link>https://ebinbellini.com/blog/</link>
 		<description>It is I, Ebin Bellini</description>
 		<copyright>(c) Ebin Bellini 2021</copyright>
 
@@ -14,12 +14,12 @@
 
 		<image>
 			<title>Ebin Bellini Logo</title>
-			<url>https://ebinbellini.top/Imgs/logo.svg</url>
-			<link>https://ebinbellini.top</link>
+			<url>https://ebinbellini.com/Imgs/logo.svg</url>
+			<link>https://ebinbellini.com</link>
 
 			<width>557</width>
 			<height>156</height>
-			<description>The logo for the ebinbellini.top website</description>
+			<description>The logo for the ebinbellini.com website</description>
 		</image>
 		{{range .Posts}}
 		<item>
