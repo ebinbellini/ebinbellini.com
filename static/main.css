@@ -270,8 +270,11 @@ h3 {
 }
 
 .card img {
-    filter: grayscale(40%);
     width: calc(100% + 8px);
+}
+
+.card .card-icon {
+    filter: grayscale(40%);
 }
 
 .card img:not(:first-of-type) {
