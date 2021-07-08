@@ -1,8 +1,10 @@
 /* latin */
+
 @font-face {
-  font-family: "Typographer Woodcut Initials One";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Typographer Woodcut Initials One"), url("TWOC-modified.ttf") format("truetype");
-  unicode-range: U+0041-005A;
+	font-family: "Typographer Woodcut Initials One";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 400;
+	src: local("Typographer Woodcut Initials One"), url("TWOC-modified.ttf") format("truetype");
+	unicode-range: U+0041-005A;
 }
