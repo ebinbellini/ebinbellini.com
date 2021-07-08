@@ -56,17 +56,14 @@
        r="2.3812499"
        cy="2.3812499"
        cx="2.3812499"
-       id="path833"
        style="fill:#c40c0c;fill-opacity:1;stroke:none;stroke-width:1.03325;stroke-linecap:round;stroke-linejoin:round" />
     <circle
        r="0.33750001"
        cy="3.8156793"
        cx="2.3819506"
-       id="path835"
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.786627;stroke-linecap:round;stroke-linejoin:round" />
     <path
        sodipodi:nodetypes="ccsscc"
-       id="path837"
        d="m 2.0651052,1.3587135 c -0.01998,-0.71415396 0.3346746,-0.68897546 0.3346746,-0.68897546 0,0 0.3163592,-0.038912 0.2930485,0.67295276 C 2.6662793,2.1534519 2.5606003,2.513711 2.4488987,3.0765743 2.4303137,3.1702253 2.3240201,3.1692773 2.2973794,3.0662743 2.1399436,2.5248218 2.0848167,1.8674744 2.0651052,1.3587135 Z"
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.046717px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>

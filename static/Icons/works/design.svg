@@ -102,11 +102,9 @@
     <path
        style="fill:#e9ca36;fill-opacity:1;stroke:#161616;stroke-width:0.26458335;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 2.1138605,0.1824804 V 10.765815 H 18.518028 Z"
-       id="path838"
        sodipodi:nodetypes="cccc" />
     <path
        sodipodi:nodetypes="cccc"
-       id="path842"
        d="m 3.9620766,3.2335704 0.016536,5.7366118 9.1400714,0.03307 z"
        style="fill:#f3f3f3;fill-opacity:1;stroke:#161616;stroke-width:0.26458335;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
@@ -267,22 +265,18 @@
     <path
        style="fill:#2c2c2c;fill-opacity:1;stroke:#2c2c2c;stroke-width:0.320145px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 8.3234574,11.489957 1.7218856,1.273257 c 0,0 3.895166,-4.6340032 5.176839,-7.4539239 C 15.731761,4.129944 13.948097,3.19449 13.384326,4.0829037 13.062248,4.4275002 11.539846,6.299829 8.3234574,11.489957 Z"
-       id="path900"
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:#202020;fill-opacity:1;stroke:#202020;stroke-width:0.320145px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 8.1999246,14.683199 7.0546981,13.828188 8.1415562,11.729735 9.8634445,13.002992 Z"
-       id="path898"
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:url(#linearGradient912);fill-opacity:1;stroke:url(#linearGradient920);stroke-width:0.320146;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 8.1999246,14.683199 6.9884537,13.787507 5.1875936,14.5538 c 0.1310619,0.840456 -0.096386,2.866145 -0.5967837,3.531289 L 6.35884,15.531882 c 0,0 -0.288097,-1.190166 0.7723862,-0.739961 1.0604829,0.450206 -0.4199522,1.02623 -0.4199522,1.02623 l -1.7945282,2.534652 c 0,0 1.417414,-1.485228 3.1142124,-1.768569 z"
-       id="path894"
        sodipodi:nodetypes="cccccscccc" />
     <path
        style="fill:none;stroke:#8d8d8d;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 10.098655,13.011737 8.0498894,11.481955"
-       id="path904"
        sodipodi:nodetypes="cc" />
   </g>
 </svg>

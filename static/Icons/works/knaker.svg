@@ -20,7 +20,6 @@
        id="clipEmfPath1"
        clipPathUnits="userSpaceOnUse">
       <path
-         id="path833"
          d="M 0,0 H 264.09071 V 373.01291 H 0 Z" />
     </clipPath>
     <pattern
@@ -68,20 +67,16 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       id="path864"
        d="M 5.8628361,10.985098 2.5438174,4.9520043 8.6750144,7.8949758 Z"
        style="fill:#d00000;fill-opacity:1;stroke:none;stroke-width:0.0457796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       id="path866"
        d="M 8.3970661,8.3200755 9.8031524,2.1561781 11.50354,8.4999199 Z"
        style="fill:#d00000;fill-opacity:1;stroke:none;stroke-width:0.0457796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       id="path868"
        d="m 11.429962,8.794222 4.422642,-3.1964 -2.346205,6.907814 -2.076437,-3.7604668 z"
        style="fill:#d00000;fill-opacity:1;stroke:none;stroke-width:0.0457796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <ellipse
        style="fill:#f8f800;fill-opacity:1;stroke:#303030;stroke-width:0.274677;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       id="path851"
        cx="9.8257065"
        cy="2.2179585"
        rx="0.82600617"
@@ -91,17 +86,14 @@
        rx="0.82600617"
        cy="5.2683439"
        cx="2.5643392"
-       id="path851-3"
        style="fill:#6da555;fill-opacity:1;stroke:#303030;stroke-width:0.274677;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <ellipse
        style="fill:#68aae0;fill-opacity:1;stroke:#303030;stroke-width:0.274677;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       id="path851-3-5"
        cx="15.67612"
        cy="5.6692352"
        rx="0.82600617"
        ry="0.826006" />
     <path
-       id="path870"
        d="m 5.6911639,13.552028 -0.9319398,2.975675 3.4007712,0.0981 1.0790909,1.536886 1.4224338,-1.831187 3.139174,-0.114446 -0.703044,-2.452483 z"
        style="fill:#3c7824;fill-opacity:1;stroke:none;stroke-width:0.0457796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <g
@@ -115,13 +107,11 @@
            r="24.722431"
            cy="128.82391"
            cx="143.65738"
-           id="path883"
            style="fill:#d00000;fill-opacity:1;stroke:#303030;stroke-width:1.5875;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
         <circle
            r="20.377235"
            cy="129.02437"
            cx="144.19191"
-           id="path883-1"
            style="fill:#f8e89b;fill-opacity:1;stroke:#303030;stroke-width:1.30849;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       </g>
       <ellipse
@@ -129,18 +119,15 @@
          rx="4.2855182"
          cy="129.64832"
          cx="106.49793"
-         id="path900"
          style="fill:#000000;fill-opacity:1;stroke:#f8e798;stroke-width:1.70272;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <ellipse
          style="fill:#000000;fill-opacity:1;stroke:#f8e798;stroke-width:1.71648;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         id="path900-2"
          cx="121.79913"
          cy="129.62064"
          rx="4.2786417"
          ry="4.9954534" />
       <path
          sodipodi:nodetypes="cssc"
-         id="path873"
          d="m 105.22383,139.89398 c 0,0 3.97172,5.06659 6.89529,7.70462 0.87344,0.78813 2.10065,1.01485 3.02381,0.18899 1.55791,-1.39371 7.36104,-7.16058 7.36104,-8.389"
          style="fill:none;stroke:#000000;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>

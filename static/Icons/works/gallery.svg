@@ -109,12 +109,10 @@
     <path
        style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.291703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 17.9422,10.499886 c 0,0 0.02209,-1.2749921 0.0134,-2.3648567 -0.0087,-1.0898646 -0.403479,-1.4642688 -1.26907,-1.4826852 -0.865576,-0.018415 -5.870826,-0.00372 -6.544851,0.056532 C 9.4676305,6.7691243 9.5718539,6.8923012 9.2956058,7.0948832 9.0193544,7.2974644 8.5662054,8.2099161 8.5662054,8.2099161 Z"
-       id="path878"
        sodipodi:nodetypes="czszscc" />
     <path
        style="fill:#d0d0d0;fill-opacity:1;stroke:none;stroke-width:0.291703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 1.434755,9.2473299 c 0.01278,-0.597893 0.5195442,-1.1037338 1.2554159,-1.1063835 1.590861,-0.00573 14.1249071,0.016455 14.1249071,0.016455 0,0 1.095051,0.010704 1.090993,1.2608018 -0.0039,1.1933258 0.03613,1.0816828 0.03613,1.0816828 l -16.5051912,0.003 c -0.00642,-0.237711 0.00599,-0.7350283 -0.00225,-1.2555301 z"
-       id="path844"
        sodipodi:nodetypes="cscscccc" />
     <rect
        ry="0.19579586"
@@ -126,15 +124,13 @@
        style="fill:#2a2a2a;fill-opacity:1;stroke:none;stroke-width:1.35934;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <ellipse
        style="fill:#202020;fill-opacity:1;stroke:#b7b7b7;stroke-width:0.87511;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path840"
        cx="9.8505039"
        cy="13.010849"
        rx="3.0387297"
        ry="2.9650633" />
     <path
        style="fill:#b8b8b8;fill-opacity:1;stroke:none;stroke-width:0.291703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 4.2809594,8.20298 0.013022,-0.7162354 c 0,0 0.026046,-0.2474267 0.4167187,-0.2474267 0.3906739,0 1.0678418,0.026046 1.0678418,0.026046 0,0 0.221382,0.013022 0.2344045,0.2474267 0.013022,0.2344041 0,0.7162353 0,0.7162353 z"
-       id="path842" />
+       d="m 4.2809594,8.20298 0.013022,-0.7162354 c 0,0 0.026046,-0.2474267 0.4167187,-0.2474267 0.3906739,0 1.0678418,0.026046 1.0678418,0.026046 0,0 0.221382,0.013022 0.2344045,0.2474267 0.013022,0.2344041 0,0.7162353 0,0.7162353 z"/>
     <rect
        style="fill:url(#linearGradient870);fill-opacity:1;stroke:none;stroke-width:0.850606;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="rect846"

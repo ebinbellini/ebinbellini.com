@@ -54,13 +54,11 @@
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
     <path
-       id="path18"
        d="M 0.48779423,11.05458 0.45052962,1.6196481 c 0,0 0.0186319,-1.14419663 1.28562848,-1.18171128 1.2669962,-0.037515 9.3906779,-0.037515 9.3906779,-0.037515 0,0 1.117938,-0.0187569 1.117938,0.90035138 0,0.9191089 -0.03726,9.7913218 -0.03726,9.7913218 0,0 0,1.087924 -0.950248,1.125439 -0.950246,0.03752 -9.5956321,0.03752 -9.5956321,0.03752 0,0 -1.17383475,0.150058 -1.17383475,-1.200468 z"
        style="fill:none;stroke:#fafafa;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
     <path
        transform="scale(0.26458333)"
        d="M 12.351562 12.144531 L 12.144531 36.992188 L 36.992188 24.214844 L 12.351562 12.144531 z "
-       style="fill:none;stroke:#fafafa;stroke-width:1.61043;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
-       id="path960" />
+       style="fill:none;stroke:#fafafa;stroke-width:1.61043;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"/>
   </g>
 </svg>

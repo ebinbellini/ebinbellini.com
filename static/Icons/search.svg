@@ -63,11 +63,9 @@
        sodipodi:cy="2.7198694"
        sodipodi:cx="2.7198696"
        sodipodi:type="arc"
-       id="path833-3"
        style="fill:none;stroke:#fafafa;stroke-width:0.294;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke" />
     <path
        sodipodi:nodetypes="cccscscscsc"
-       id="path1483"
        d="m 3.8777994,4.076237 0.611849,0.6201169 -0.1135665,0.1205989 c 0,0 -0.095947,0.066228 -0.013649,0.2571461 0.089808,0.2083402 2.3472346,2.4995989 2.3472346,2.4995989 0,0 0.165838,0.1141997 0.2645834,0.074415 0.094614,-0.038121 0.2356445,-0.1901693 0.2356445,-0.1901693 0,0 0.099219,-0.1157552 -0.033073,-0.2811198 C 7.0445312,7.0114582 4.8500761,4.719396 4.8500761,4.719396 c 0,0 -0.1394643,-0.1688752 -0.3604277,-0.023042 C 4.3509444,4.7878968 3.8777994,4.076237 3.8777994,4.076237 Z"
        style="fill:none;stroke:#fafafa;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>

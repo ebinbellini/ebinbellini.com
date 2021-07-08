@@ -62,17 +62,14 @@
        r="1.1112499"
        cy="48.375431"
        cx="27.458443"
-       id="path830"
        style="fill:#f47000;fill-opacity:1;stroke-width:0.0555625;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke" />
     <path
        sodipodi:nodetypes="cc"
-       id="path832"
        d="m 26.564338,45.689876 c 0,0 3.540212,0.0046 3.532187,3.545416"
        style="fill:none;fill-opacity:1;stroke:#f47000;stroke-width:1.11125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        style="fill:none;fill-opacity:1;stroke:#f47000;stroke-width:1.11125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 26.545628,43.6319 c 0,0 5.635606,-0.01406 5.64629,5.622101"
-       id="path834"
        sodipodi:nodetypes="cc" />
   </g>
 </svg>
