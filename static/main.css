@@ -476,6 +476,12 @@ a:hover .card-name::after {
     #other-sites {
         width: 198px;
     }
+    /* Drop cap */
+    :not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
+        font-size: 58px;
+        line-height: 32px;
+        padding-top: 22px;
+    }
 }
 
 @media screen and (max-width: 571px) {
