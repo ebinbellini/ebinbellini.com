@@ -56,6 +56,13 @@ p, article {
     text-align: justify;
 }
 
+.pic-caption {
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 90%;
+    text-align: center;
+}
+
 article {
     margin: 0 20px 16px 20px;
     font-size: 18px;
