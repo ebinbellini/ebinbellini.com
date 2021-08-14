@@ -161,13 +161,13 @@ a, .button, .icon-link, .search {
     position: sticky;
     z-index: 4;
     box-sizing: border-box;
-    top: 140px;
+    top: 120px;
     max-width: 680px;
     width: calc(100% - 32px);
     left: 16px;
     right: 16px;
     margin: 0 auto;
-    transform: translateY(-124px);
+    transform: translateY(-104px);
 }
 
 .small-icon {
@@ -479,7 +479,7 @@ a:hover .card-name::after {
         padding: 0;
     }
     .nav-icon-buttons {
-        margin: -56px 0 80px 16px;
+        margin: -36px 0 36px 16px;
         position: static;
         transform: translate(0);
     }
