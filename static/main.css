@@ -36,15 +36,14 @@ nav .nav-content {
     width: 557px;
 }
 
-.divider, .small-divider {
+.divider {
     width: 100%;
     border-bottom: 2px solid #2d2d2d;
     margin-bottom: 3px;
 }
 
 .small-divider {
-    width: 64px;
-    border-bottom: 2px solid #2d2d2d;
+    width: 136px;
     margin: 12px auto 8px auto;
 }
 
