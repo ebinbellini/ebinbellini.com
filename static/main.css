@@ -9,6 +9,11 @@ body {
     font-size: 18px;
 }
 
+::selection {
+    background: #040404;
+    color: #fafafa;
+}
+
 main {
     max-width: 675px;
     margin: 0 auto 72px auto;
