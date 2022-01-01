@@ -327,6 +327,11 @@ a:hover .card-name::after {
     color: #121212;
 }
 
+.card .card-year {
+    padding: 0 24px 0 24px;
+    font-size: 30px;
+}
+
 /* Not blog posts */
 
 .card>p {
@@ -463,41 +468,50 @@ a:hover .card-name::after {
 @media screen and (max-width: 800px) {
     main {
         margin-bottom: 32px;
-    } 
+    }
 }
 
 @media screen and (max-width: 500px) {
     .search {
         left: unset;
     }
+
     .button {
         line-height: 48px;
         font-size: 18px;
     }
+
     main {
         padding: 0 16px;
     }
+
     body {
         font-size: 16px;
     }
+
     nav {
         top: -58px;
     }
+
     h1 {
         font-size: 48px;
         line-height: 42px;
     }
+
     nav .nav-content {
         padding: 0;
     }
+
     .nav-icon-buttons {
         margin: -36px 0 36px 16px;
         position: static;
         transform: translate(0);
     }
+
     #other-sites {
         width: 198px;
     }
+
     /* Drop cap */
     :not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
         font-size: 58px;
@@ -510,4 +524,16 @@ a:hover .card-name::after {
     nav {
         top: calc(48px + 12px - 28vw - 79.158px) !important;
     }
+
+    .card>p,
+    .card .card-name,
+    .card .card-year {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .card>article {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+}
 }
