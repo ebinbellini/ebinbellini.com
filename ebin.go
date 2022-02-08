@@ -413,13 +413,12 @@ func getBlogPostData(path string, info os.FileInfo) (BlogPost, error) {
 	// Remove HTML tags, tabs, and carriage returns
 	re := regexp.MustCompile(`(<div .*</div>)|(<.*>)|(</.*>)|(<.*/>)|(\t+)|(\r)`)
 	desc = strings.TrimSpace(string(re.ReplaceAll([]byte(desc), []byte(""))))
-	// Remove new lines (put everything on one line)
-	re = regexp.MustCompile(`(\n)`)
-	desc = string(re.ReplaceAll([]byte(desc), []byte(" ")))
+	/*// Remove new lines (put everything on one line)
+	desc = strings.ReplaceAll(desc, "\n", " ")
 	// Limit the string to 150 bytes
 	if len(desc) > 150 {
 		desc = strings.TrimSpace(desc[0:146]) + "..."
-	}
+	}*/
 
 	// Time format for XML
 	const rfc2822 = "Mon Jan 02 15:04:05 -0700 2006"
