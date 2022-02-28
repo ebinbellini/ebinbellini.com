@@ -504,7 +504,9 @@ a:hover .card-name::after {
 
     .nav-icon-buttons {
         margin: -36px 0 36px 16px;
-        position: static;
+        position: relative;
+        top: 0;
+        left: 0;
         transform: translate(0);
     }
 
