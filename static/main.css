@@ -43,6 +43,7 @@ nav .nav-content {
 
 .divider {
     width: 705px;
+    max-width: 100%;
     border-bottom: 2px solid #2d2d2d;
     margin: 0 auto 3px auto;
 }
