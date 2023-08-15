@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="265.41629"
-   height="48.169075"
-   viewBox="0 0 70.224725 12.744735"
+   width="238.47777"
+   height="43.584286"
+   viewBox="0 0 68.792 12.572452"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="dusk.svg">
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="dusk.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -28,19 +28,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313709"
-     inkscape:cx="143.53419"
-     inkscape:cy="22.021644"
+     inkscape:zoom="4.0779054"
+     inkscape:cx="116.35876"
+     inkscape:cy="-5.1497026"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1898"
-     inkscape:window-height="1024"
-     inkscape:window-x="76"
-     inkscape:window-y="17"
-     inkscape:window-maximized="0"
-     units="px" />
+     inkscape:window-width="1852"
+     inkscape:window-height="990"
+     inkscape:window-x="32"
+     inkscape:window-y="54"
+     inkscape:window-maximized="1"
+     units="px"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -49,12 +52,11 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-1.3255843,-33.440395)"
+     transform="translate(-2.0421145,-33.083572)"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
@@ -101,19 +103,19 @@
     </g>
     <rect
        ry="0.077957675"
-       y="35.729408"
-       x="2.0421145"
+       y="33.6605"
+       x="2.0422831"
        height="0.79374999"
        width="68.791664"
-       id="rect832"
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.374727;stroke-linecap:round;stroke-linejoin:round" />
+       id="rect1"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.344698;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.64583;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect857"
        width="58.208332"
        height="0.79374999"
-       x="7.3337803"
-       y="34.141911"
+       x="7.3339491"
+       y="35.679737"
        ry="0.077957675" />
   </g>
 </svg>

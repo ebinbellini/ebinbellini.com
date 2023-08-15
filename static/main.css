@@ -42,9 +42,13 @@ nav .nav-content {
 }
 
 .divider {
-    width: 100%;
+    width: 705px;
     border-bottom: 2px solid #2d2d2d;
-    margin-bottom: 3px;
+    margin: 0 auto 3px auto;
+}
+
+.divider:last-of-type {
+    width: 685px;
 }
 
 .small-divider {
@@ -76,12 +80,18 @@ article {
 :not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
     font-size: 62px;
     float: left;
-    line-height: 38px;
-    padding-top: 27px;
+    line-height: 0.5;
+    padding-top: 31px;
     padding-right: 4px;
     margin-left: -3px;
     font-family: "Typographer Woodcut Initials One", "IM FELL English", serif;
-    display: inline-block;
+}
+
+@-moz-document url-prefix() {
+    /* The drop caps aren't positioned the same in Firefox and Chrome */
+    :not(.card)>p:first-of-type:first-letter, .drop-cap::first-letter {
+        padding-top: 5px;
+    }
 }
 
 a {
@@ -274,12 +284,26 @@ h3 {
 }
 
 .card {
-    margin: 24px 0;
-    border-radius: 4px;
+    padding: 48px 0;
+    margin-top: 48px;
     overflow: hidden;
-    background: #fafafa;
     font-size: 18px;
-    border: 2px solid #353535;
+}
+
+.card::after {
+    content: "";
+    background: url(/Icons/separator-flower.png);
+    height: 67px;
+    width: 199px;
+    transform: scale(0.75);
+    font-size: 48px;
+    text-align: center;
+    display: block;
+    margin: 48px auto 0;
+}
+
+.blogpost .title {
+    display: none;
 }
 
 .card img {
@@ -305,30 +329,26 @@ h3 {
     transition: 200ms;
 }
 
-.card .card-name::after {
-    content: "🡕";
-    position: relative;
-    top: 16px;
-    display: inline-block;
-    margin-left: -36px;
-    overflow: hidden;
-    opacity: 0;
-    transition: margin-left 200ms cubic-bezier(0.6, 0.1, 0.5, 0.9), opacity 200ms cubic-bezier(0.1, 0.7, 0.2, 1.1);
+a.card-name-container,
+.card-name,
+.card-year,
+.blog-post-date {
+    text-align: center;
+    padding-bottom: 24px;
+    color: #121212;
+    display: block;
 }
 
-a:hover .card-name::after {
-    transition: margin-left 200ms cubic-bezier(0, 0.5, 0.2, 1), opacity 200ms cubic-bezier(0.86, 0.01, 0.6, 1.05);
-    margin-left: 0px;
-    opacity: 1;
+.blog-post-date {
+    font-size: 28px;
 }
 
 .card .card-name:hover {
-    /* ワンツーワンツー　グルグルカクレボ */
     color: #121212;
 }
 
 .card .card-year {
-    padding: 0 24px 0 24px;
+    padding: 0 24px 24px 24px;
     font-size: 30px;
 }
 
@@ -448,16 +468,20 @@ a:hover .card-name::after {
 }
 
 .back::before {
-    content: "←";
+    content: "";
+    background: url(/Icons/arrow.svg);
     width: 0;
+    height: 8px;
     overflow: hidden;
     transition: 200ms cubic-bezier(0, 0, 0, 1);
     opacity: 0;
     float: left;
+    transform: translateY(7px);
 }
 
 .back:hover::before {
-    width: 24px;
+    margin-right: 8px;
+    width: 34px;
     opacity: 1;
 }
 
@@ -537,5 +561,4 @@ a:hover .card-name::after {
         margin-left: 8px;
         margin-right: 8px;
     }
-}
 }

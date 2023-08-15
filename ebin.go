@@ -24,10 +24,11 @@ type CollectionLink struct {
 }
 
 type BlogPost struct {
-	Name    string
-	Path    string
-	Content template.HTML
-	Tags    []string
+	Name         string
+	ReadableDate string
+	Path         string
+	Content      template.HTML
+	Tags         []string
 
 	// Used in RSS
 	PubDate    string
@@ -172,9 +173,13 @@ func serveQuery(w http.ResponseWriter, r *http.Request) {
 	tp := filepath.Join("templates", "query", "index.html")
 	tmpl, err := template.ParseFiles(lp, tp)
 	if err != nil {
-		fmt.Println(err)
+		serveInternalError(w, r)
+		return
 	}
-	tmpl.ExecuteTemplate(w, "layout", data)
+	err = tmpl.ExecuteTemplate(w, "layout", data)
+	if err != nil {
+		serveInternalError(w, r)
+	}
 }
 
 func findMatchingDocuments(search []string) (matches []DocumentMatch, err error) {
@@ -377,8 +382,8 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 
 		post, err := getBlogPostData(path, info)
 		if err != nil {
-			fmt.Println(err)
 			serveInternalError(w, r)
+			return nil
 		}
 		posts = append(posts, post)
 
@@ -413,71 +418,81 @@ func getBlogPostData(path string, info os.FileInfo) (BlogPost, error) {
 	// Remove HTML tags, tabs, and carriage returns
 	re := regexp.MustCompile(`(<div .*</div>)|(<.*>)|(</.*>)|(<.*/>)|(\t+)|(\r)`)
 	desc = strings.TrimSpace(string(re.ReplaceAll([]byte(desc), []byte(""))))
-	/*// Remove new lines (put everything on one line)
-	desc = strings.ReplaceAll(desc, "\n", " ")
-	// Limit the string to 150 bytes
-	if len(desc) > 150 {
-		desc = strings.TrimSpace(desc[0:146]) + "..."
-	}*/
 
 	// Time format for XML
 	const rfc2822 = "Mon Jan 02 15:04:05 -0700 2006"
-	const titleformat = "2006-01-02"
+	const blogFormat = "2006-01-02"
+	const readableFormat = "January 2, 2006"
 
-	datePublished, err := time.Parse(titleformat, name)
+	timePublished, err := time.Parse(blogFormat, name)
 	if err != nil {
 		return BlogPost{}, err
 	}
-	pubDate := datePublished.Format(rfc2822)
+	pubDate := timePublished.Format(rfc2822)
+	readableDate := timePublished.Format(readableFormat)
+
+	tags, title := extractBlogPostTitleAndTags(contentPath)
 
 	return BlogPost{
-		Name:       name,
-		Path:       "https://ebinbellini.com/blog/post/" + name + "/",
-		Desc:       desc,
-		Content:    template.HTML(buf.String()),
-		Tags:       extractBlogPostTags(contentPath),
-		PubDate:    pubDate,
-		LastChange: info.ModTime().Format(rfc2822),
+		Name:         title,
+		Path:         "https://ebinbellini.com/blog/post/" + name + "/",
+		Desc:         desc,
+		Content:      template.HTML(buf.String()),
+		Tags:         tags,
+		ReadableDate: readableDate,
+		PubDate:      pubDate,
+		LastChange:   info.ModTime().Format(rfc2822),
 	}, nil
 }
 
-func extractBlogPostTags(path string) []string {
+func extractBlogPostTitleAndTags(path string) (tags []string, title string) {
+	title = "No title"
+	tags = []string{}
+
 	file, err := os.Open(path)
 	if err != nil {
-		return nil
+		return nil, title
 	}
 	defer file.Close()
 
 	reader := bufio.NewReader(file)
 
-	tags := []string{}
-
-	line, err := reader.ReadString('\n')
-	if err != nil && err != io.EOF {
-		return tags
-	}
-
-	// Skip looking for tags if the file does not start with a tag container
-	if !strings.Contains(line, `<div class="tags">`) {
-		return tags
-	}
-
 	for {
-		line, err = reader.ReadString('\n')
-		if err != nil && err != io.EOF {
-			break
+		// Read line expected to contain title or start of tags
+		line, err := reader.ReadString('\n')
+		if err != nil || !strings.Contains(line, "<div") {
+			return tags, title
 		}
 
-		// Return at the end of the tag container
-		if strings.Contains(line, `</div>`) {
-			return tags
+		// Check if line contains title
+		re := regexp.MustCompile(`<div class="title">(.*)</div>`)
+		matches := re.FindStringSubmatch(line)
+		if len(matches) > 1 {
+			title = matches[1]
+			continue
 		}
 
-		// Get tag from within quotation marks
-		tags = append(tags, strings.Split(strings.Split(line, `"`)[1], "/")[2])
+		if strings.Contains(line, `<div class="tags">`) {
+			for {
+				line, err = reader.ReadString('\n')
+				if err != nil && err != io.EOF {
+					break
+				}
+
+				// Return at the end of the tag container
+				if strings.Contains(line, `</div>`) {
+					return tags, title
+				}
+
+				// Get tag from within quotation marks
+				tags = append(tags, strings.Split(strings.Split(line, `"`)[1], "/")[2])
+			}
+		}
+
+		if title != "No title" && len(tags) > 0 {
+			return tags, title
+		}
 	}
-
-	return tags
 }
 
 func redirectToKnaker(w http.ResponseWriter, r *http.Request) {
@@ -507,7 +522,8 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 			}
 			err := tmpl.ExecuteTemplate(w, "layout", data)
 			if err != nil {
-				fmt.Println(err)
+				serveInternalError(w, r)
+				return
 			}
 		}
 	} else {
@@ -531,7 +547,8 @@ func serveGalleryPage(w http.ResponseWriter, r *http.Request) {
 			}
 			err = tmpl.ExecuteTemplate(w, "layout", data)
 			if err != nil {
-				fmt.Println(err)
+				serveInternalError(w, r)
+				return
 			}
 		}
 	}

@@ -211,39 +211,45 @@
 	</div>
 
 	<div class="center-content">
-		<img class="small-divider" src="/Icons/dusk pixelated.svg">
+		<img class="small-divider" src="/Icons/dusk.svg">
 	</div>
 
 	<main>
+
+		{{if not .SinglePost}}
 		<h2 id="about">{{template "title"}}{{.Title}}</h2>
+		{{end}}
 		{{template "body"}}
 
 		{{if .BlogPosts}}
 		<div class="center-content" style="margin-bottom: 24px">
-			<h4><img src="/Icons/warning.svg"
-					style="position: relative; top: 2px"> Warning: may contain
-				Swedish</h4>
-			<a href="/rss">
-				<img id="rss-icon" src="/Icons/rss.svg">
+			{{if not .SinglePost}}
+			<a href="/rss" style="color: #F47000; font-size: 24px;">
+				<img id="rss-icon" src="/Icons/rss.svg" style="margin: 0 4px 3px 0;">
 				RSS Feed
 			</a>
+			{{end}}
+
+
+			{{if .SelectedTag}}
+			<br style="margin-bottom: 24px;">
+			Showing only posts marked with #{{.SelectedTag}}.
+			<a href="/blog/">Clear filter</a>
+			{{end}}
+
+			{{if .SinglePost}}
+			<br style="margin-bottom: 24px;">
+			<a href="/blog/" class="back">Back to blog</a>
+			{{end}}
 		</div>
-		{{end}}
-
-		{{if .SelectedTag}}
-		Showing only posts marked with #{{.SelectedTag}}.
-		<a href="/blog/">Clear filter</a>
-		{{end}}
-
-		{{if .SinglePost}}
-		<a href="/blog/" class="back">Back to blog</a>
 		{{end}}
 
 		{{range .BlogPosts}}
 		<div class="card blogpost">
-			<a href="{{.Path}}">
+			<a href="{{.Path}}" class="card-name-container">
 				<div class="card-name">{{.Name}}</div>
 			</a>
+			<div class="blog-post-date">{{.ReadableDate}}</div>
 			<article>
 				{{.Content}}
 			</article>
@@ -253,12 +259,10 @@
 		{{range .Links}}
 		<div class="card">
 			<a href="{{.Path}}">
-				<img src="{{.Path}}{{.Image}}">
 				<div class="card-name">{{.Name}}</div>
+				<span class="card-year">Contains {{.ImgCount}} images</span>
+				<img src="{{.Path}}{{.Image}}">
 			</a>
-			<p>
-				Contains {{.ImgCount}} images
-			</p>
 		</div>
 		{{end}}
 
