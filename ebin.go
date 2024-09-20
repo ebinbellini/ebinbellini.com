@@ -369,7 +369,7 @@ func blogPosts(w http.ResponseWriter, r *http.Request) []BlogPost {
 
 	// Walk through all files in blog folder
 	err := filepath.Walk(fp, func(path string, info os.FileInfo, err error) error {
-		// Only interesteed in folders
+		// Only interested in folders
 		if !info.IsDir() {
 			return nil
 		}

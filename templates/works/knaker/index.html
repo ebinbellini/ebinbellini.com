@@ -27,14 +27,28 @@
 	.doc h3 {
 		transition: 200ms;
 		text-align: left;
+		position: relative;
+		font-size: 28px;
+		width: fit-content;
+	}
+
+	.doc h3::after {
+		content: "";
+		position: absolute;
+		width: 0px;
+		bottom: 0;
+		left: 0;
+		height: 2px;
+		background: #a8170d;
+		transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.doc:hover h3::after {
+		width: 100%;
 	}
 
 	.doc img {
 		height: 200px;
-	}
-
-	.doc:hover {
-		transform: scale(1.1);
 	}
 </style>
 
@@ -51,7 +65,7 @@
 <div id="grid">
 	<a class="doc" href="basregler.pdf">
 		<img src="bas.png">
-		<h3>Knåker Basregler</h3>
+		<h3>Knåker basregler</h3>
 		<p>
 			Noggrant genomtänkta grundregler speciellt designade för att göra kortspelet så actionfyllt och
 			underhållande som möjligt.
@@ -61,7 +75,7 @@
 	</a>
 	<a class="doc" href="mailto:ebinbellini@airmail.cc">
 		<img src="månfaser.png">
-		<h3>Knåkerexpansion - Månfaser</h3>
+		<h3>Expansion: månfaser</h3>
 		<p>
 			Extraordinärt välskrivna regler vars effekt beror på vilken dag du spelar. Detta inför ännu mer
 			dynamik i ett spel där det redan händer en hel del.
